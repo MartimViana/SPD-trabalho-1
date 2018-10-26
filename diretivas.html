@@ -7,6 +7,7 @@
  		<script src="myscripts.js"></script>
  		<!-- Set character set to display latin characters -->
  		<meta charset="UTF-8">
+ 		 <link href="style.css" rel="stylesheet">
 
  		<!-- Set author -->
  		 <meta name="author" content="Group 8">
@@ -16,10 +17,7 @@
 	</head>
 
 	<body>
-		<!-- 
-			Tópicos: Introdução, estrutura, narrativa, exemplos clássicos, erros (no meio da narrativa)
-		-->
-		<div class="container" style="width: 90%">
+		<div class="container main" style="width: 90%">
 			<div class="row">
 				<center>
 					<div class="jumbotron">
@@ -30,37 +28,17 @@
 			</div>
 			<div class="row">
 				<!-- MAIN NAVIGATION TAB -->
-				<div class="col-sm-2">
-					<nav class="container-fluid">
-						<ul class="nav navbar-nav">
-							<li><a href="index.html">O que é o OpenMP?</a></li>
-							<br>
-
-							<li><a href="tudo_pronto.html">Tudo pronto?</a></li>
-							<br>
-
-							<li class="active"><a href="diretivas.html">Diretivas</a></li>
-							<br>
-
-							<li><a href="clausulas.html">Cláusulas</a></li>
-							<br>
-
-							<li><a href="execucao.html">Bibliotecas de execução</a></li>
-							<br>
-
-							<li><a href="variaveis.html">Variáveis de ambiente</a></li>
-							<br>
-
-							<li><a href="exemplos.html">Exemplos clássicos</a></li>
-							<br>
-
-							<li><a href="erros.html">Erros frequentes</a></li>
-							<br>
-						</ul>
-					</nav>
-				</div>
-
-				<div class="col-sm-14">
+  	<div class="sidenav">
+    <a href="index.html">O que é o OpenMP?</a>
+    <a href="tudo_pronto.html">Tudo pronto?</a>
+    <a href="diretivas.html">Diretivas</a>
+    <a href="clausulas.html">Cláusulas</a>
+    <a href="execucao.html">Bibliotecas de execução</a>
+    <a href="variaveis.html">Variáveis de ambiente</a>
+    <a href="exemplos.html">Exemplos clássicos</a>
+  </div>
+				<!-- SECTION CONTENT -->
+				<div class="main">
 					<p>
 						Como já foi abordado anteriormente no tutorial, o OpenMP é composto por 3 componentes principais da API, sendo estes: diretivas de compilador, biblioteca de execução e variáveis de ambiente. As diretivas de compilador serão bastante importantes na estrutura do nosso programa paralelo, pois servem para:
 					</p>
@@ -173,36 +151,36 @@
 								<tbody>
 									<tr>
 										<td>
-											PROGRAM HELLO
+											PROGRAM HELLO<br>
  
- !   Zona de paralelizacao  
-!$OMP PARALLEL 
+ !   Zona de paralelizacao  <br>
+!$OMP PARALLEL <br>
  
- !     Imprimir a mensagem “Hello World!”
-       PRINT *, 'Hello World!'
+ !     Imprimir a mensagem “Hello World!”<br>
+       PRINT *, 'Hello World!'<br>
  
- !     Acontece o join das threads, restando apenas a master
- !$OMP END PARALLEL
+ !     Acontece o join das threads, restando apenas a master<br>
+ !$OMP END PARALLEL<br><br>
  
-        END
+        END<br>
 
 										</td>
 										<td>
 
-#include <omp.h>
+#include <omp.h><br>
  
- int main(int argc, char *argv[]) {
+ int main(int argc, char *argv[]) {<br>
  
- /* Zona de paralelizacao  */
- #pragma omp parallel
-   {
+ /* Zona de paralelizacao  */<br>
+ #pragma omp parallel<br>
+   {<br>
  
-   /* Imprimir a mensagem “Hello World!” */
-   printf("Hello World! \n");
+   /* Imprimir a mensagem “Hello World!” */<br>
+   printf("Hello World! \n");<br>
  
-   }  /*Acontece o join das threads, restando apenas a master */
- Return 0;
- }
+   }  /*Acontece o join das threads, restando apenas a master */<br>
+ Return 0;<br>
+ }<br>
 
 										</td>
 									</tr>
@@ -222,25 +200,25 @@
 							</div>
 							<b>Incorreto</b>
 							<p>
-								#pragma omp parallel num_threads(2)  
+								#pragma omp parallel num_threads(2)  <br>
 {  
-   #pragma single  
-   {  
-     printf("me\n");  
-   }  
-}
+   #pragma single  <br>
+   {  <br>
+     printf("me\n");  <br>
+   }  <br>
+}<br>
 
 							</p>
 							<br>
 							<b>Correto</b>
 							<p>
-								#pragma omp parallel num_threads(2)  
-{  
-   #pragma omp single  
-   {  
-     printf("me\n");  
-   }  
-}  
+								#pragma omp parallel num_threads(2)  <br>
+{  <br>
+   #pragma omp single  <br>
+   {  <br>
+     printf("me\n");  <br>
+   }  <br>
+}  <br>
 
 							</p>
 						</div>
@@ -260,10 +238,10 @@
 							<b>Sintaxe em C/C++:</b>
 							<br>
 							<code class="code">
-								#pragma omp parallel [cláusulas]  
-{
-  // código que será corrido em paralelo.
-} // final da região em paralelo
+								#pragma omp parallel [cláusulas]  <br>
+{<br>
+  // código que será corrido em paralelo.<br>
+} // final da região em paralelo<br>
 
 						</code>
 						</div>
@@ -272,9 +250,9 @@
 							<b>Sintaxe em Fortran:</b>
 							<br>
 							<code class="code">
-								!$OMP PARALLEL [cláusulas]  
-  // código que será corrido em paralelo.
-!$OMP END PARALLEL
+								!$OMP PARALLEL [cláusulas] <br> 
+  // código que será corrido em paralelo.<br>
+!$OMP END PARALLEL<br>
 
 							</code>
 						</div>
@@ -283,14 +261,14 @@
 							<b>Exemplo do programa ATM.c:</b>
 							<br>
 							<code class="code">
-    #pragma omp parallel num_threads(N)
-    {
+    #pragma omp parallel num_threads(N)<br>
+    {<br>
 
-        int thread_id = omp_get_thread_num();
-        //printf("thread %d começou!\n", thread_id);
+        int thread_id = omp_get_thread_num();<br>
+        //printf("thread %d começou!\n", thread_id);<br>
 
-        cliente(thread_id);
-    }
+        cliente(thread_id);<br>
+    }<br>
 
 							</code>
 						</div>
@@ -321,15 +299,15 @@
 							<b>Incorreto:</b>
 							<br>
 							<code>
-								#pragma omp for  
-... //bloco_código
+								#pragma omp for  <br>
+... //bloco_código<br>
 							</code>
 							<br>
 							<b>Correto:</b>
 							<br>
 							<code>
-								#pragma omp parallel for   
-... //bloco_código
+								#pragma omp parallel for   <br>
+... //bloco_código<br>
 							</code>
 						</div>
 						<p>
@@ -354,8 +332,8 @@
 						<b>Exemplo de sintaxe em C/C++:</b>
 						<br>
 						<code>
-							#pragma omp for [cláusulas]
-   // ciclo for
+							#pragma omp for [cláusulas]<br>
+   // ciclo for<br>
 
 						</code>
 					</div>
@@ -363,9 +341,9 @@
 					<div class="container-fluid">
 						<h4>Sintaxe em Fortran:</h4>
 						<code>
-							!$OMP DO [cláusulas]  
-  // código que será corrido em paralelo.
-!$OMP END DO [NOWAIT]
+							!$OMP DO [cláusulas]  <br>
+  // código que será corrido em paralelo.<br>
+!$OMP END DO [NOWAIT]<br>
 
 
 						</code>
@@ -398,18 +376,18 @@
 									<b>Incorreto:</b>
 									<br>
 									<code>
-										#pragma omp parallel num_threads(2)  
-for (int i = 0; i < 10; i++)  
-   myFunc();
+										#pragma omp parallel num_threads(2) <br> 
+for (int i = 0; i < 10; i++)  <br>
+   myFunc();<br>
 
 									</code>
 									<br>
 									<b>Correto:</b>
 									<br>
 									<code>
-										#pragma omp parallel for num_threads(2)  
-for (int i = 0; i < 10; i++)  
-   myFunc(); 
+										#pragma omp parallel for num_threads(2)  <br>
+for (int i = 0; i < 10; i++)  <br>
+   myFunc(); <br>
 									</code>
 									<br>
 									<p>
@@ -429,15 +407,15 @@ for (int i = 0; i < 10; i++)
 						<b>Exemplo de sintaxe em C/C++:</b>
 						<br>
 						<code>
-							#pragma omp sections [cláusulas] 
-   {  
-      #pragma omp section
-         //código que fará parte desta secção
+							#pragma omp sections [cláusulas] <br>
+   {  <br>
+      #pragma omp section<br>
+         //código que fará parte desta secção<br>
 
-      #pragma omp section
-         //código que fará parte desta secção
+      #pragma omp section<br>
+         //código que fará parte desta secção<br>
 
-   } // final do código por secções
+   } // final do código por secções<br>
 
 						</code>
 						<br>
@@ -445,15 +423,15 @@ for (int i = 0; i < 10; i++)
 						<br>
 						<code>
 							
-!$OMP SECTIONS [cláusulas]  
+!$OMP SECTIONS [cláusulas]  <br>
 
-!$OMP SECTION
-   //código que fará parte desta secção
+!$OMP SECTION<br>
+   //código que fará parte desta secção<br>
 
-!$OMP SECTION
-  //código que fará parte desta secção
+!$OMP SECTION<br>
+  //código que fará parte desta secção<br><br>
 
-!$OMP END SECTIONS [NOWAIT]
+!$OMP END SECTIONS [NOWAIT]<br>
 
 						</code>
 					</div>
@@ -485,10 +463,10 @@ for (int i = 0; i < 10; i++)
 						<b>Exemplo de sintaxe em C/C++:</b>
 						<br>
 						<code>
-							#pragma omp single [cláusulas]   
-{  
-   //código que irá correr numa única thread   
-     } 
+							#pragma omp single [cláusulas]  <br> 
+{  <br>
+   //código que irá correr numa única thread   <br><br>
+     } <br>
 
 						</code>
 						<br>
@@ -496,9 +474,9 @@ for (int i = 0; i < 10; i++)
 						<br>
 						<code>
 							
-!$OMP SINGLE [cláusulas]  
-   //código que irá correr numa única thread   
-!$OMP END SINGLE [NOWAIT]
+!$OMP SINGLE [cláusulas]  <br>
+   //código que irá correr numa única thread   <br>
+!$OMP END SINGLE [NOWAIT]<br>
 
 						</code>
 					</div>
@@ -537,13 +515,13 @@ for (int i = 0; i < 10; i++)
 						<b>Exemplo de sintaxe em C/C++:</b>
 						<br>
 						<code>
-							#pragma omp barrier
+							#pragma omp barrier<br>
 						</code>
 						<br>
 						<b>Sintaxe em Fortran:</b>
 						<br>
 						<code>
-							!$OMP BARRIER
+							!$OMP BARRIER<br>
 						</code>
 					</div>
 					<p>
@@ -560,10 +538,10 @@ for (int i = 0; i < 10; i++)
 						<b>Exemplo de sintaxe em C/C++:</b>
 						<br>
 						<code>
-							#pragma omp critical [(nome)]   
-{  
-   //código que irá correr num thread de cada vez  
-     }
+							#pragma omp critical [(nome)]   <br>
+{  <br>
+   //código que irá correr num thread de cada vez  <br>
+     }<br>
 
 						</code>
 						<br>
@@ -571,9 +549,9 @@ for (int i = 0; i < 10; i++)
 						<br>
 						<code>
 							
-!$OMP CRITICAL [(nome)]  
-   //código 
-!$OMP END CRITICAL [(nome)]
+!$OMP CRITICAL [(nome)]  <br>
+   //código <br>
+!$OMP END CRITICAL [(nome)]<br>
 
 						</code>
 					</div>
@@ -591,40 +569,40 @@ for (int i = 0; i < 10; i++)
 						<br>
 						<code>
 							
-// Espera por todos os clientes para efetuarem todas
-    // as ações ao mesmo tempo
-    #pragma omp critical (transacao)
-    {
-        // Se o cliente avisou que queria fazer um depósito, irá
-        // Efetuar um depósito. Os clientes que pretendem efetuar
-        // um depósito têm prioridade sobre os que pretendem
-        // levantar.
-        if(action == 1) {
-            deposito(quantia);
-            printf("[%d] %d foram depositados da sua conta.\nSaldo atual: %d\n", id, quantia, dinheiro);
-        }
+// Espera por todos os clientes para efetuarem todas<br>
+    // as ações ao mesmo tempo<br>
+    #pragma omp critical (transacao)<br>
+    {<br>
+        // Se o cliente avisou que queria fazer um depósito, irá<br>
+        // Efetuar um depósito. Os clientes que pretendem efetuar<br>
+        // um depósito têm prioridade sobre os que pretendem<br>
+        // levantar.<br>
+        if(action == 1) {<br>
+            deposito(quantia);<br>
+            printf("[%d] %d foram depositados da sua conta.\nSaldo atual: %d\n", id, quantia, dinheiro);<br>
+        }<br>
 
-        // Se o cliente avisou que queria fazer um levantamento e
-        // possui saldo suficiente na conta para o efetuar, então
-        // irá efetuar um levantamento.
-        else if(action == 2 && quantia <= dinheiro) {
+        // Se o cliente avisou que queria fazer um levantamento e<br>
+        // possui saldo suficiente na conta para o efetuar, então<br><br>
+        // irá efetuar um levantamento.<br>
+        else if(action == 2 && quantia <= dinheiro) {<br>
         
-            levantamento(quantia);
-            printf("[%d] %d foram levantados da sua conta.\nSaldo atual: %d\n",id, quantia, dinheiro);
-        }
+            levantamento(quantia);<br>
+            printf("[%d] %d foram levantados da sua conta.\nSaldo atual: %d\n",id, quantia, dinheiro);<br>
+        }<br>
 
-        // Caso o utilizador não possua saldo suficiente, irá
-        // avisar.
-        else if(action == 2) {
-            printf("[%d] ERRO: Saldo insuficiente.\n", id);
-        }
+        // Caso o utilizador não possua saldo suficiente, irá<br>
+        // avisar.<br>
+        else if(action == 2) {<br>
+            printf("[%d] ERRO: Saldo insuficiente.\n", id);<br>
+        }<br>
 
-        // Caso nenhuma das condições tenham sido atingidas, quer
-        // dizer que algo no programa falhou.
-        else {
-            printf("[%d] ERRO\n", id);
-        }
-    }
+        // Caso nenhuma das condições tenham sido atingidas, quer<br>
+        // dizer que algo no programa falhou.<br>
+        else {<br>
+            printf("[%d] ERRO\n", id);<br>
+        }<br>
+    }<br>
 						</code>
 					</div>
 
@@ -639,43 +617,43 @@ for (int i = 0; i < 10; i++)
 						<b>Exemplo de sintaxe em C/C++:</b>
 						<br>
 						<code>
-							#pragam omp atomic  
-   expressão
+							#pragam omp atomic  <br>
+   expressão<br>
 
 						</code>
 						<br>
 						<b>Sintaxe em Fortran:</b>
 						<br>
 						<code>
-							!$OMP ATOMIC
-   expressão
+							!$OMP ATOMIC<br>
+   expressão<br>
 
 						</code>
 						<br>
 						<b>Exemplo do somatório:</b>
 						<br>
 						<code>
-							void somatorio(double n) {
-    // Cria uma região paralela que será percorrida por
-    // N threads
-    #pragma omp parallel num_threads(N)
-    {
-        // Inicializa a variável id, que representa o número do thread
-        int id = omp_get_thread_num();
+							void somatorio(double n) {<br>
+    // Cria uma região paralela que será percorrida por<br>
+    // N threads<br>
+    #pragma omp parallel num_threads(N)<br>
+    {<br>
+        // Inicializa a variável id, que representa o número do thread<br>
+        int id = omp_get_thread_num();<br>
 
-        // Inicializa o mínimo e o máximo que o thread vai contar
-        int min = id * n/N + 1;
-        int max = (id+1) * n/N;
-        printf("[%d] min = %d ; max = %d\n",id, min, max);
-        // Como a obtenção do resultado é uma "mini" secção crítica,
-        // foi declarada uma zona atómica, onde o resultado irá ser incrementado
-        int sum = sum_until(min, max);
-        #pragma omp atomic
-            result = result + sum;
-    }
+        // Inicializa o mínimo e o máximo que o thread vai contar<br>
+        int min = id * n/N + 1;<br>
+        int max = (id+1) * n/N;<br>
+        printf("[%d] min = %d ; max = %d\n",id, min, max);<br>
+        // Como a obtenção do resultado é uma "mini" secção crítica,<br>
+        // foi declarada uma zona atómica, onde o resultado irá ser incrementado<br><br>
+        int sum = sum_until(min, max);<br>
+        #pragma omp atomic<br>
+            result = result + sum;<br>
+    }<br>
 
-    printf("Resultado: %d\n", result);
-}
+    printf("Resultado: %d\n", result);<br>
+}<br>
 
 						</code>
 					</div>
@@ -697,19 +675,19 @@ for (int i = 0; i < 10; i++)
 						<b>Exemplo de sintaxe em C/C++:</b>
 						<br>
 						<code>
-							#pragma omp master  
-{  
-   //bloco de código  
-} 
+							#pragma omp master  <br>
+{  <br>
+   //bloco de código  <br>
+} <br>
 
 						</code>
 						<br>
 						<b>Sintaxe em Fortran: </b>
 						<br>
 						<code>
-							!$OMP MASTER  
-   //código 
-!$OMP END MASTER
+							!$OMP MASTER  <br>
+   //código <br>
+!$OMP END MASTER<br>
 
 						</code>
 					</div>
@@ -728,13 +706,13 @@ for (int i = 0; i < 10; i++)
 						<b>Exemplo de sintaxe em C/C++:</b>
 						<br>
 						<code>
-							#pragma omp flush [(lista_variaveis)]
+							#pragma omp flush [(lista_variaveis)]<br>
 						</code>
 						<br>
 						<b>Sintaxe em Fortran: </b>
 						<br>
 						<code>
-							!$OMP FLUSH [(lista variáveis)]
+							!$OMP FLUSH [(lista variáveis)]<br>
 						</code>
 					</div>
 					<p>
@@ -768,17 +746,17 @@ for (int i = 0; i < 10; i++)
 						<b>Exemplo de sintaxe em C/C++:</b>
 						<br>
 						<code>
-							#pragma omp ordered  
-   //bloco com o ciclo for
+							#pragma omp ordered  <br>
+   //bloco com o ciclo for<br>
 
 						</code>
 						<br>
 						<b>Sintaxe em Fortran:</b>
 						<br>
 						<code>
-							!$OMP ORDERED  
-   //bloco com o ciclo for
-!$OMP END ORDERED 
+							!$OMP ORDERED  <br>
+   //bloco com o ciclo for<br>
+!$OMP END ORDERED <br>
 
 						</code>
 					</div>
@@ -799,13 +777,13 @@ for (int i = 0; i < 10; i++)
 						<b>Exemplo de sintaxe em C/C++:</b>
 						<br>
 						<code>
-							#pragma omp threadprivate(vars)
+							#pragma omp threadprivate(vars)<br>
 						</code>
 						<br>
 						<b>Sintaxe em Fortran:</b>
 						<br>
 						<code>
-							!$OMP THREADPRIVATE (/cb/, …) onde cb é o nome de um bloco comum
+							!$OMP THREADPRIVATE (/cb/, …) onde cb é o nome de um bloco comum<br>
 						</code>
 					</div>
 					<p>
@@ -823,28 +801,28 @@ for (int i = 0; i < 10; i++)
 									<b>Incorreto:</b>
 									<br>
 									<code>
-										#pragma omp parallel num_threads(2)  
+										#pragma omp parallel num_threads(2)  <br>
 {  
-    #pragma omp parallel for  
-    for (int i = 0; i < 10; i++)  
-    {  
-         myFunc();  
-    }  
-}
+    #pragma omp parallel for  <br>
+    for (int i = 0; i < 10; i++)  <br>
+    {  <br>
+         myFunc();  <br>
+    }  <br>
+}<br>
 
 									</code>
 									<br>
 									<b>Correto:</b>
 									<br>
 									<code>
-										#pragma omp parallel num_threads(2)  
-{  
-    #pragma omp for  
-    for (int i = 0; i < 10; i++)  
-    {  
-         myFunc();  
-    }  
-}
+										#pragma omp parallel num_threads(2)  <br>
+{  <br>
+    #pragma omp for  <br>
+    for (int i = 0; i < 10; i++)  <br>
+    {  <br>
+         myFunc();  <br>
+    }  <br>
+}<br>
 
 									</code>
 								</div>
@@ -857,5 +835,95 @@ for (int i = 0; i < 10; i++)
 				</div>
 			</div>
 		</div>
+
+		<div class="container">
+
+  <h2>Pergunta 1 - Qual das diretivas do OpeMP é melhor para calcular a soma de indices de dois arrais e guardar os resultados num terceiro array no mesmo indice?</h2>
+  <!-- Trigger the modal with a button -->
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Ver resposta</button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Resposta:</h4>
+        </div>
+        <div class="modal-body">
+          <p>Obviamente será a diretiva DO/for! Pois para calcular a soma de dois arrays é necessário percorrer um ciclo for, assim usamos a diretiva DO/for para dividir o trabalho entre as threads. </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="container">
+
+<h2>Pergunta 2 - Uma thread acaba de entrar num bloco de código abrangido por diretiva critical, o que acontece com outra que tenta entrar no mesmo bloco logo a seguir? </h2>
+<!-- Trigger the modal with a button -->
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Ver resposta</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+<div class="modal-dialog">
+
+	<!-- Modal content-->
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">Resposta:</h4>
+		</div>
+		<div class="modal-body">
+			<p>A segunda thread ficará à espera até que a thread inicial saia do bloco de código que é abrangido pela diretiva critical. </p>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		</div>
+	</div>
+
+</div>
+</div>
+
+</div>
+
+<div class="container">
+
+<h2>Pergunta 3 - Qual a diretiva a usar se o meu objetivo é atualizar uma variável partilhada em segurança. Será a diretiva atomic ou a diretiva critical?  </h2>
+<!-- Trigger the modal with a button -->
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Ver resposta</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+<div class="modal-dialog">
+
+	<!-- Modal content-->
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">Resposta:</h4>
+		</div>
+		<div class="modal-body">
+			<p>Como o meu único objetico é atualizar uma váriavel, deverei usar a diretiva atomic, enquanto que a diretiva critical especifica uma região de código, podendo incluir funções e outras variáveis. </p>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		</div>
+	</div>
+
+</div>
+</div>
+
+</div>
+
+
+
 	</body>
 </html>

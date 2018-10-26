@@ -7,7 +7,7 @@
  		<script src="myscripts.js"></script>
  		<!-- Set character set to display latin characters -->
  		<meta charset="UTF-8">
-
+ 		 <link href="style.css" rel="stylesheet">
  		<!-- Set author -->
  		 <meta name="author" content="Group 8">
  		 
@@ -15,11 +15,11 @@
 		<title>Tutorial SPD</title>
 	</head>
 
-	<body>
+	<bodys>
 		<!-- 
 			Tópicos: Introdução, estrutura, narrativa, exemplos clássicos, erros (no meio da narrativa)
 		-->
-		<div class="container" style="width: 90%">
+		<div class="container main" style="width: 90%;">
 			<div class="row">
 				<center>
 					<div class="jumbotron">
@@ -30,37 +30,17 @@
 			</div>
 			<div class="row">
 				<!-- MAIN NAVIGATION TAB -->
-				<div class="col-sm-2">
-					<nav class="container-fluid">
-						<ul class="nav navbar-nav">
-							<li><a href="index.html">O que é o OpenMP?</a></li>
-							<br>
-
-							<li class="active"><a href="tudo_pronto.html">Tudo pronto?</a></li>
-							<br>
-
-							<li><a href="diretivas.html">Diretivas</a></li>
-							<br>
-
-							<li><a href="clausulas.html">Cláusulas</a></li>
-							<br>
-
-							<li><a href="execucao.html">Bibliotecas de execução</a></li>
-							<br>
-
-							<li><a href="variaveis.html">Variáveis de ambiente</a></li>
-							<br>
-
-							<li><a href="exemplos.html">Exemplos clássicos</a></li>
-							<br>
-
-							<li><a href="erros.html">Erros frequentes</a></li>
-							<br>
-						</ul>
-					</nav>
-				</div>
+  	<div class="sidenav">
+    <a href="index.html">O que é o OpenMP?</a>
+    <a href="tudo_pronto.html">Tudo pronto?</a>
+    <a href="diretivas.html">Diretivas</a>
+    <a href="clausulas.html">Cláusulas</a>
+    <a href="execucao.html">Bibliotecas de execução</a>
+    <a href="variaveis.html">Variáveis de ambiente</a>
+    <a href="exemplos.html">Exemplos clássicos</a>
+  </div>
 				<!-- SECTION CONTENT -->
-				<div class="col-sm-14">
+				<div class="main">
 					<p>
 						Em programação OpenMP é importante entender como é utilizado os dados em um thread (“Data scope”), devido ao facto de este ser baseado no modelo de programação de memória compartilhada, a maioria das variáveis são compartilhadas entre os threads por definição (Variáveis Globais).
 					</p>
@@ -263,10 +243,99 @@
 					</div>
 					<p>
 						Especifica que para cada variável presente na list, no final da execução da diretiva ao thread deverá passar o valor entre os restantes threads. Normalmente esta cláusula está associada a diretiva single. Ou seja, antes de o thread chegar ao ponto da barrier, irá se realizar broadcast de todas as variáveis presentes na lista.
-					</p>
+						</p>
 				</div>
 			</div>
 		</div>
+<hr>
+		<div class="container">
+
+  <h2>Pergunta 1 - Qual das diretivas do OpeMP é melhor para calcular a soma de indices de dois arrais e guardar os resultados num terceiro array no mesmo indice?</h2>
+  <!-- Trigger the modal with a button -->
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Ver resposta</button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Resposta:</h4>
+        </div>
+        <div class="modal-body">
+          <p>Obviamente será a diretiva DO/for! Pois para calcular a soma de dois arrays é necessário percorrer um ciclo for, assim usamos a diretiva DO/for para dividir o trabalho entre as threads. </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="container">
+
+<h2>Pergunta 2 - Uma thread acaba de entrar num bloco de código abrangido por diretiva critical, o que acontece com outra que tenta entrar no mesmo bloco logo a seguir? </h2>
+<!-- Trigger the modal with a button -->
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Ver resposta</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+<div class="modal-dialog">
+
+	<!-- Modal content-->
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">Resposta:</h4>
+		</div>
+		<div class="modal-body">
+			<p>A segunda thread ficará à espera até que a thread inicial saia do bloco de código que é abrangido pela diretiva critical. </p>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		</div>
+	</div>
+
+</div>
+</div>
+
+</div>
+
+<div class="container">
+
+<h2>Pergunta 3 - Qual a diretiva a usar se o meu objetivo é atualizar uma variável partilhada em segurança. Será a diretiva atomic ou a diretiva critical?  </h2>
+<!-- Trigger the modal with a button -->
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Ver resposta</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+<div class="modal-dialog">
+
+	<!-- Modal content-->
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">Resposta:</h4>
+		</div>
+		<div class="modal-body">
+			<p>Como o meu único objetico é atualizar uma váriavel, deverei usar a diretiva atomic, enquanto que a diretiva critical especifica uma região de código, podendo incluir funções e outras variáveis. </p>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		</div>
+	</div>
+
+</div>
+</div>
+
+</div>
+
+
 
 	</body>
 </html>

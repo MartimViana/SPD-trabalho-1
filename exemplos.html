@@ -7,6 +7,7 @@
     <script src="myscripts.js"></script>
  		<!-- Set character set to display latin characters -->
  		<meta charset="UTF-8">
+     <link href="style.css" rel="stylesheet">
 
  		<!-- Set author -->
  		 <meta name="author" content="Group 8">
@@ -19,48 +20,34 @@
 		<!-- 
 			Tópicos: Introdução, estrutura, narrativa, exemplos clássicos, erros (no meio da narrativa)
 		-->
-		<div class="container" style="width: 90%">
-			<div class="row">
-				<center>
-					<div class="jumbotron">
-						<!-- SECTION TITLE -->
-						<h2>Exemplos clássicos</h2>
-					</div>
-				</center>
-			</div>
-			<div class="row">
-				<!-- MAIN NAVIGATION TAB -->
-				<div class="col-sm-2">
-					<nav class="container-fluid">
-						<ul class="nav navbar-nav">
-							<li><a href="index.html">O que é o OpenMP?</a></li>
-							<br>
+    <div class="container main" style="width: 90%">
+      <div class="row">
+        <center>
+          <div class="jumbotron">
+            <!-- SECTION TITLE -->
+            <h2>Exemplos</h2>
+          </div>
+        </center>
+      </div>
+      <div class="row">
+        <!-- MAIN NAVIGATION TAB -->
+    <div class="sidenav">
+    <a href="index.html">O que é o OpenMP?</a>
+    <a href="tudo_pronto.html">Tudo pronto?</a>
+    <a href="diretivas.html">Diretivas</a>
+    <a href="clausulas.html">Cláusulas</a>
+    <a href="execucao.html">Bibliotecas de execução</a>
+    <a href="variaveis.html">Variáveis de ambiente</a>
+    <a href="exemplos.html">Exemplos clássicos</a>
+  </div>
+        <!-- SECTION CONTENT -->
+        <div class="main">
 
-							<li><a href="tudo_pronto.html">Tudo pronto?</a></li>
-							<br>
+          <p>
+            Aqui serão apresentados alguns exemplos de problemas clássicos de programação e de programação paralela. É aconselhado utilizarem os conhecimentos adquiridos neste tutorial para primeiro programar a sua solução do problema antes de partir para os exemplos dados nesta secção.
+          </p>
 
-							<li><a href="diretivas.html">Diretivas</a></li>
-							<br>
 
-							<li><a href="clausulas.html">Cláusulas</a></li>
-							<br>
-
-							<li><a href="execucao.html">Bibliotecas de execução</a></li>
-							<br>
-
-							<li><a href="variaveis.html">Variáveis de ambiente</a></li>
-							<br>
-
-							<li class="active"><a href="exemplos.html">Exemplos clássicos</a></li>
-							<br>
-
-							<li><a href="erros.html">Erros frequentes</a></li>
-							<br>
-						</ul>
-					</nav>
-				</div>
-				<!-- SECTION CONTENT -->
-				<div class="col-sm-14">
 					<center><h3>Hello World</h3></center>
 					<p>
 						O hello world é utilizado como um exemplo clássico utilizado para introduzir programadores a uma linguagem de programação nova. Neste caso, pretende-se que todos os threads digam “Olá do thread “, seguido do id do thread.
@@ -75,24 +62,24 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#define N 5                        // O número de threads
+#define N 5                        // O número de threads<br>
+<br>
+/* HELLO WORLD */<br>
+void hello_world() {<br>
+    // Cria uma região paralela que será percorrida por<br>
+    // N threads<br>
+    #pragma omp parallel num_threads(N)<br>
+    {<br>
+        // Inicializa a variável id, que representa o número do thread<br>
+        int id = omp_get_thread_num();<br>
 
-/* HELLO WORLD */
-void hello_world() {
-    // Cria uma região paralela que será percorrida por
-    // N threads
-    #pragma omp parallel num_threads(N)
-    {
-        // Inicializa a variável id, que representa o número do thread
-        int id = omp_get_thread_num();
+        // Para os olás aparecem organizados, os threads vão esperar<br>
+        // id segundos<br>
+        sleep(id);<br><br>
 
-        // Para os olás aparecem organizados, os threads vão esperar
-        // id segundos
-        sleep(id);
-
-        // Imprime o resultado no ecrã
-        printf("Olá do thread %d\n", id);
-    }
+        // Imprime o resultado no ecrã<br>
+        printf("Olá do thread %d\n", id);<br>
+    }<br>
 }
 
 						</code>
@@ -114,49 +101,49 @@ void hello_world() {
 #include <stdlib.h>
 #include <unistd.h>
 
-#define N 5                        // Número de threads
+#define N 5                        // Número de threads<br>
+<br>
+/* SOMATÓRIO */<br>
+/*<br>
+    Somatório individual de cada thread<br>
+*/<br>
+int sum_until(int min, int max) {<br>
+    int result = 0;<br>
+    for(int i = min; i <= max; i++)<br>
+        result += i;<br>
+    return result;<br>
+}<br>
 
-/* SOMATÓRIO */
-/*
-    Somatório individual de cada thread
-*/
-int sum_until(int min, int max) {
-    int result = 0;
-    for(int i = min; i <= max; i++)
-        result += i;
-    return result;
-}
+<br>
+int somatorio(double n) {<br>
 
-
-int somatorio(double n) {
-
-    // Cria uma região paralela que será percorrida por
-    // N threads
-    #pragma omp parallel num_threads(N)
+    // Cria uma região paralela que será percorrida por<br>
+    // N threads<br>
+    #pragma omp parallel num_threads(N)<br>
     {
-        // Inicializa a variável id, que representa o número do thread
-        int id = omp_get_thread_num();
+        // Inicializa a variável id, que representa o número do thread<br>
+        int id = omp_get_thread_num();<br>
 
-        // Inicializa o mínimo e o máximo que o thread vai contar
-        int min = id * n/N + 1;
-        int max = (id+1) * n/N;
-        printf("[%d] min = %d ; max = %d\n",id, min, max);
-        // Como a obtenção do resultado é uma "mini" secção crítica,
-        // foi declarada uma zona atómica, onde o resultado irá ser incrementado
-        int sum = sum_until(min, max);
-        #pragma omp atomic
-            result = result + sum;
-    }
+        // Inicializa o mínimo e o máximo que o thread vai contar<br>
+        int min = id * n/N + 1;<br>
+        int max = (id+1) * n/N;<br>
+        printf("[%d] min = %d ; max = %d\n",id, min, max);<br>
+        // Como a obtenção do resultado é uma "mini" secção crítica,<br>
+        // foi declarada uma zona atómica, onde o resultado irá ser incrementado<br>
+        int sum = sum_until(min, max);<br>
+        #pragma omp atomic<br>
+            result = result + sum;<br>
+    }<br>
 
-    return result;
-}
-int main(int argc, char ** argv)
-{
-    int n = 0;
-    printf("Valor: ");
-    scanf("%d", &n);
-    printf(“%d\n”, somatorio(n));
-    return 0;
+    return result;<br><br>
+}<br>
+int main(int argc, char ** argv)<br>
+{<br>
+    int n = 0;<br>
+    printf("Valor: ");<br>
+    scanf("%d", &n);<br>
+    printf(“%d\n”, somatorio(n));<br>
+    return 0;<br>
 }
 
 						</code>
@@ -190,85 +177,85 @@ int main(int argc, char ** argv)
 #include <stdlib.h>
 #include <unistd.h>
 
-#define N 5                        // O número de filósofos que irão comer
-#define ROUNDS 3                   // O número de vezes que cada filósofo irá comer
-static omp_lock_t chopsticks[N];   // Os pauzinhos são uma abstração dos locks
+#define N 5                        // O número de filósofos que irão comer<br>
+#define ROUNDS 3                   // O número de vezes que cada filósofo irá comer<br>
+static omp_lock_t chopsticks[N];   // Os pauzinhos são uma abstração dos locks<br>
 
-/* JANTAR DOS FILÓSOFOS */
-/*  
-    Esta função irá representar os threads. Cada filósofo deve esperar até todos os outros
-    terem começado antes de continuar. Cada filósofo come um número de vezes igual á variável
-    ROUNDS. Cada filósofo deve ter ambos os pauzinhos para poder comer.
- */
-void filosofo()
-{
-  // Espera por todos os threads para começar
-  #pragma omp barrier
+/* JANTAR DOS FILÓSOFOS */<br>
+/*  <br>
+    Esta função irá representar os threads. Cada filósofo deve esperar até todos os outros<br>
+    terem começado antes de continuar. Cada filósofo come um número de vezes igual á variável<br>
+    ROUNDS. Cada filósofo deve ter ambos os pauzinhos para poder comer.<br>
+ */<br>
+void filosofo()<br>
+{<br>
+  // Espera por todos os threads para começar<br>
+  #pragma omp barrier<br>
 
-  // Inicializa as variáveis id (o número do thread), o indicador do pauzinho direito e o
-  // indicador do pauzinho esquerdo.
-  int id = omp_get_thread_num();
-  int right_chopstick;
-  int left_chopstick;
+  // Inicializa as variáveis id (o número do thread), o indicador do pauzinho direito e o<br>
+  // indicador do pauzinho esquerdo.<br>
+  int id = omp_get_thread_num();<br>
+  int right_chopstick;<br>
+  int left_chopstick;<br>
+<br>
+  //  Os filósofos 0 até ao N-2 irão agarrar no pauzinho esquerdo (que se encontra na mesma<br>
+  //  posição do array) e no pauzinho direito (que se encontra uma posição á direita).<br>
+  if(id < N -1)<br>
+  {<br>
+    right_chopstick = id;<br>
+    left_chopstick = id+1;<br>
+  }<br><br>
 
-  //  Os filósofos 0 até ao N-2 irão agarrar no pauzinho esquerdo (que se encontra na mesma
-  //  posição do array) e no pauzinho direito (que se encontra uma posição á direita).
-  if(id < N -1)
-  {
-    right_chopstick = id;
-    left_chopstick = id+1;
-  }
+  //  O filósofo N-1 (o último filósofo) encontra-se numa situação especial, já que o garfo<br>
+  //  direito encontra-se na primeira posição do array.<br>
+  else<br>
+  {<br>
+    right_chopstick = 0;<br>
+    left_chopstick = id;<br>
+  }<br>
 
-  //  O filósofo N-1 (o último filósofo) encontra-se numa situação especial, já que o garfo
-  //  direito encontra-se na primeira posição do array.
-  else
-  {
-    right_chopstick = 0;
-    left_chopstick = id;
-  }
+  //  Efetua a ação do filósofo<br>
+  for(int i = 0; i < ROUNDS; i++)<br>
+  {<br>
+    // Agarra nos pauzinhos<br>
+    omp_set_lock(&chopsticks[left_chopstick]);<br>
+    omp_set_lock(&chopsticks[right_chopstick]);<br><br>
 
-  //  Efetua a ação do filósofo
-  for(int i = 0; i < ROUNDS; i++)
-  {
-    // Agarra nos pauzinhos
-    omp_set_lock(&chopsticks[left_chopstick]);
-    omp_set_lock(&chopsticks[right_chopstick]);
+    // Indica ao utilizador que está a comer<br>
+    printf("O filosofo %d come\n", id);<br><br>
 
-    // Indica ao utilizador que está a comer
-    printf("O filosofo %d come\n", id);
+    // Espera 1 segundo<br>
+    sleep(1);<br>
 
-    // Espera 1 segundo
-    sleep(1);
+    // Larga os garfos<br>
+    omp_unset_lock(&chopsticks[left_chopstick]);<br>
+    omp_unset_lock(&chopsticks[right_chopstick]);<br>
+  }<br>
+}<br><br>
 
-    // Larga os garfos
-    omp_unset_lock(&chopsticks[left_chopstick]);
-    omp_unset_lock(&chopsticks[right_chopstick]);
-  }
-}
+/*<br>
+  Estabelece a situação inicial do jantar dos filósofos.<br>
+*/<br>
+void jantar_filosofos()<br>
+{<br>
+  int i;<br>
 
-/*
-  Estabelece a situação inicial do jantar dos filósofos.
-*/
-void jantar_filosofos()
-{
-  int i;
+  // Inicializa os locks<br>
+  for(i = 0; i < N; i++)<br>
+    omp_init_lock(&chopsticks[i]);<br>
 
-  // Inicializa os locks
-  for(i = 0; i < N; i++)
-    omp_init_lock(&chopsticks[i]);
+  //  Cria uma zona paralela que será percorrida por<br>
+  //  N filósofos (N threads). Cada filósofo irá correr<br>
+  //  a sua "versão" da função filosofo<br>
+  #pragma omp parallel num_threads(N)<br>
+  {<br>
+    filosofo();<br>
+  }<br>
 
-  //  Cria uma zona paralela que será percorrida por
-  //  N filósofos (N threads). Cada filósofo irá correr
-  //  a sua "versão" da função filosofo
-  #pragma omp parallel num_threads(N)
-  {
-    filosofo();
-  }
-
-  // Espera que os filósofos acabem de comer para destruir
-  // os locks.
-  for(i = 0; i < N; i++)
-    omp_destroy_lock(&chopsticks[i]);
+  // Espera que os filósofos acabem de comer para destruir<br>
+  // os locks.<br>
+  for(i = 0; i < N; i++)<br>
+    omp_destroy_lock(&chopsticks[i]);<br>
 }
 
 						</code>
@@ -294,118 +281,118 @@ void jantar_filosofos()
 #include <string.h>
 #include <limits.h>
 
-//VARIÁVEIS GLOBAIS
-#define N 4
-int dinheiro = 0;
+//VARIÁVEIS GLOBAIS<br>
+#define N 4<br>
+int dinheiro = 0;<br>
 
 
-//FUNÇÕES
-char *str_dup(const char *s)
-{
-  char *result = (char *) malloc(strlen(s) + 1);
-  strcpy(result, s);
-  return result;
-}
+//FUNÇÕES<br>
+char *str_dup(const char *s)<br>
+{<br>
+  char *result = (char *) malloc(strlen(s) + 1);<br>
+  strcpy(result, s);<br>
+  return result;<br>
+}<br>
 
-int str_readline(FILE *f, char *s)
-{
-  int result = EOF;
-  char *p = fgets(s, INT_MAX, f);
-  if (p != NULL)
-  {
-    result = (int) strlen(s);
-    if (result > 0 && s[result-1] == '\n')
-      s[--result] = '\0';
-  }
-  return result;
-}
+int str_readline(FILE *f, char *s)<br>
+{<br>
+  int result = EOF;<br>
+  char *p = fgets(s, INT_MAX, f);<br>
+  if (p != NULL)<br>
+  {<br>
+    result = (int) strlen(s);<br>
+    if (result > 0 && s[result-1] == '\n')<br>
+      s[--result] = '\0';<br>
+  }<br>
+  return result;<br>
+}<br>
 
 
-void deposito(int m) {
-    #pragma omp atomic
-        dinheiro = dinheiro + m;
-}
+void deposito(int m) {<br>
+    #pragma omp atomic<br>
+        dinheiro = dinheiro + m;<br>
+}<br>
 
-void levantamento(int m) {
-    #pragma omp atomic
-        dinheiro = dinheiro - m;
-}
+void levantamento(int m) {<br>
+    #pragma omp atomic<br>
+        dinheiro = dinheiro - m;<br>
+}<br>
 
-/*
-    Simula o comportamento de um cliente.
-*/
-void cliente(int id) {
-    int action = 0;
-    char resposta[20];
-    int quantia = 0;
-    // Declara esta secção como uma zona crítica onde
-    // apenas pode ser interpretada por um thread de
-    // cada vez.
-    #pragma omp critical (decision)
-    {
-        while(action == 0) {
-            printf("[%d] Deposito ou levantamento? ", id);
-            str_readline(stdin, resposta);
-            if(strcmp(resposta, "deposito") == 0) {
-                action = 1;
-                printf("Quantia: ");
-                scanf("%d", &quantia);
-            }
-            else if(strcmp(resposta, "levantamento") == 0) {
-                action = 2;
-                printf("Quantia: ");
-                scanf("%d", &quantia);
-            }
-        }
-    }
+/*<br>
+    Simula o comportamento de um cliente.<br>
+*/<br>
+void cliente(int id) {<br>
+    int action = 0;<br>
+    char resposta[20];<br>
+    int quantia = 0;<br>
+    // Declara esta secção como uma zona crítica onde<br>
+    // apenas pode ser interpretada por um thread de<br>
+    // cada vez.<br>
+    #pragma omp critical (decision)<br>
+    {<br>
+        while(action == 0) {<br>
+            printf("[%d] Deposito ou levantamento? ", id);<br>
+            str_readline(stdin, resposta);<br>
+            if(strcmp(resposta, "deposito") == 0) {<br>
+                action = 1;<br>
+                printf("Quantia: "); <br>
+                scanf("%d", &quantia);<br>
+            }<br>
+            else if(strcmp(resposta, "levantamento") == 0) {<br>
+                action = 2;<br>
+                printf("Quantia: ");<br>
+                scanf("%d", &quantia);<br>
+            }<br>
+        }<br>
+    }<br>
+<br>
+    // Espera por todos os clientes para efetuarem todas<br>
+    // as ações ao mesmo tempo<br>
+    #pragma omp critical (transacao)<br>
+    {<br>
+        // Se o cliente avisou que queria fazer um depósito, irá<br>
+        // Efetuar um depósito. Os clientes que pretendem efetuar<br>
+        // um depósito têm prioridade sobre os que pretendem<br>
+        // levantar.<br>
+        if(action == 1) {<br>
+            deposito(quantia);<br>
+            printf("[%d] %d foram depositados da sua conta.\nSaldo atual: %d\n", id, quantia, dinheiro);<br>
+        }<br><br>
 
-    // Espera por todos os clientes para efetuarem todas
-    // as ações ao mesmo tempo
-    #pragma omp critical (transacao)
-    {
-        // Se o cliente avisou que queria fazer um depósito, irá
-        // Efetuar um depósito. Os clientes que pretendem efetuar
-        // um depósito têm prioridade sobre os que pretendem
-        // levantar.
-        if(action == 1) {
-            deposito(quantia);
-            printf("[%d] %d foram depositados da sua conta.\nSaldo atual: %d\n", id, quantia, dinheiro);
-        }
-
-        // Se o cliente avisou que queria fazer um levantamento e
-        // possui saldo suficiente na conta para o efetuar, então
-        // irá efetuar um levantamento.
-        else if(action == 2 && quantia <= dinheiro) {
+        // Se o cliente avisou que queria fazer um levantamento e<br>
+        // possui saldo suficiente na conta para o efetuar, então<br>
+        // irá efetuar um levantamento.<br>
+        else if(action == 2 && quantia <= dinheiro) {<br><br>
         
-            levantamento(quantia);
-            printf("[%d] %d foram levantados da sua conta.\nSaldo atual: %d\n",id, quantia, dinheiro);
-        }
+            levantamento(quantia);<br>
+            printf("[%d] %d foram levantados da sua conta.\nSaldo atual: %d\n",id, quantia, dinheiro);<br>
+        }<br>
 
-        // Caso o utilizador não possua saldo suficiente, irá
-        // avisar.
-        else if(action == 2) {
-            printf("[%d] ERRO: Saldo insuficiente.\n", id);
-        }
+        // Caso o utilizador não possua saldo suficiente, irá<br>
+        // avisar.<br>
+        else if(action == 2) {<br>
+            printf("[%d] ERRO: Saldo insuficiente.\n", id);<br>
+        }<br>
 
-        // Caso nenhuma das condições tenham sido atingidas, quer
-        // dizer que algo no programa falhou.
-        else {
-            printf("[%d] ERRO\n", id);
-        }
-    }
-}
+        // Caso nenhuma das condições tenham sido atingidas, quer<br>
+        // dizer que algo no programa falhou.<br>
+        else {<br>
+            printf("[%d] ERRO\n", id);<br>
+        }<br>
+    }<br>
+}<br><br>
 
-//MAIN
-int main() {
+//MAIN<br>
+int main() {<br><br>
 
-    printf("A estabelecer uma zona paralela para %d threads...\n", N);
-    #pragma omp parallel num_threads(N)
-    {
-        int thread_id = omp_get_thread_num();
-        cliente(thread_id);
-    }
-    return 0;
-}
+    printf("A estabelecer uma zona paralela para %d threads...\n", N);<br>
+    #pragma omp parallel num_threads(N)<br>
+    {<br>
+        int thread_id = omp_get_thread_num();<br>
+        cliente(thread_id);<br>
+    }<br>
+    return 0;<br>
+}<br>
 						</code>
 					</div>
 				</div>
