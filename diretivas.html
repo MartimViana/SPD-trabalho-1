@@ -1,0 +1,824 @@
+<html>
+	<head>
+		<!-- Use the bootstrap as design reference -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+ 		<!-- Set character set to display latin characters -->
+ 		<meta charset="UTF-8">
+
+ 		<!-- Set author -->
+ 		 <meta name="author" content="Group 8">
+ 		 
+ 		<!-- Website title -->
+		<title>Tutorial SPD</title>
+	</head>
+
+	<body>
+		<!-- 
+			Tópicos: Introdução, estrutura, narrativa, exemplos clássicos, erros (no meio da narrativa)
+		-->
+		<div class="container" style="width: 90%">
+			<div class="row">
+				<center>
+					<div class="jumbotron">
+						<!-- SECTION TITLE -->
+						<h2>Tudo pronto?</h2>
+					</div>
+				</center>
+			</div>
+			<div class="row">
+				<!-- MAIN NAVIGATION TAB -->
+				<div class="col-sm-2">
+					<nav class="container-fluid">
+						<ul class="nav navbar-nav">
+							<li><a href="index.html">O que é o OpenMP?</a></li>
+							<br>
+
+							<li class="active"><a href="tudo_pronto.html">Tudo pronto?</a></li>
+							<br>
+
+							<li><a href="diretivas.html">Diretivas</a></li>
+							<br>
+
+							<li><a href="clausulas.html">Cláusulas</a></li>
+							<br>
+
+							<li><a href="execucao.html">Bibliotecas de execução</a></li>
+							<br>
+
+							<li><a href="variaveis.html">Variáveis de ambiente</a></li>
+							<br>
+
+							<li><a href="exemplos.html">Exemplos clássicos</a></li>
+							<br>
+
+							<li><a href="erros.html">Erros frequentes</a></li>
+							<br>
+
+							<li><a href="referencias.html">Referências</a></li>
+							<br>
+						</ul>
+					</nav>
+				</div>
+
+				<div class="col-sm-14">
+					<p>
+						Como já foi abordado anteriormente no tutorial, o OpenMP é composto por 3 componentes principais da API, sendo estes: diretivas de compilador, biblioteca de execução e variáveis de ambiente. As diretivas de compilador serão bastante importantes na estrutura do nosso programa paralelo, pois servem para:
+					</p>
+					<div class="container-fluid">
+						<ul>
+							<li>Gerar uma região de paralelismo;</li>
+							<li>Dividir seções de código entre os vários threads;</li>
+							<li>Distribuir iterações de ciclos entre os vários threads;</li>
+							<li>Correr uma secção em série;</li>
+							<li>Controlar o acesso a dados;</li>
+							<li>Gerir a sincronização entre os vários threads.</li>
+						</ul>
+					</div>
+
+					<br>
+					<p>
+						Estas diretivas consistem numa linha de código, funcionando como indicadores de zonas paralelas para o compilador no meio de um código em série. Em OpenMP, o programador não precisa de se preocupar com a criação dos threads, pois fica à responsabilidade do compilador, mas sim com o número de threads.  O número de threads é determinado pelos seguintes fatores em ordem:
+					</p>
+					<div class="container-fluid">
+						<ul>
+							<li>Utilização da função omp_set_num_threads() no código Fortran ou C/C++;</li>
+							<li>Definindo a variável de ambiente OMP_NUM_THREADS, antes da execução.</li>
+							<li>Implementação padrão do ambiente: número de processadores/núcleos.</li>
+						</ul>
+					</div>
+					<p>
+						E ainda, é onde a paralelização irá acontecer e a sua configuração. Aqui só queremos abordar como código funcional para sistemas paralelos, e mais tarde veremos como são distribuídas as tarefas e a respectiva sincronização entre os threads.
+					</p>
+					<div class="container-fluid">
+						<p>
+							<b>Nota:</b> Um programa com várias regiões paralelas, poderá utilizar o mesmo número de threads para executar cada região, ou não. Caso se queira alterar dinamicamente o número de threads de uma determinada região paralela durante a execução do programa teremos dois métodos disponíveis:
+						</p>
+
+						<div class="container-fluid">
+							<ul>
+								<li>Utilização da função omp_set_dynamic() no código Fortran ou C/C++;</li>
+								<li>Definindo a variável de ambiente OMP_DYNAMIC, antes da execução.</li>
+							</ul>
+						</div>
+
+						As diretivas são identificadas por: Sentinela  NomeDaDiretiva  [Cláusulas]
+						<br><br>
+						<b>Por exemplo:</b>
+						<br>
+						<div class="container-fluid">
+							<table class="table">
+								<tbody>
+									<tr>
+										<td>
+											<b>Fortran</b>
+										</td>
+										<td>
+											!$OMP PARALLEL DEFAULT(SHARED) PRIVATE(A,B,C,D)
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<b>C/C++</b>
+										</td>
+										<td>
+											#pragma omp parallel default(shared) private(a,b,c,d)
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="container-fluid">
+							<table class="table table-striped">
+								<tbody>
+									<tr>
+										<td>
+											<b>Sentinelas</b>
+										</td>
+										<td>
+											!$OMP (Fortran), #pragma omp (C/C++)
+										</td>
+									</tr>
+
+									<tr>
+										<td>
+											<b>Nome das diretivas</b>
+										</td>
+										<td>
+											PARALLEL (Fortran), parallel (C/C++)
+										</td>
+									</tr>
+
+									<tr>
+										<td>
+											<b>Cláusulas</b>
+										</td>
+										<td>
+											DEFAULT(SHARED) e PRIVATE(A,B,C,D), default(shared) e private(a,b,c,d)(C/C++)
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<p>
+							Um exemplo mais concreto e de igual forma simples é o mítico “Hello World”. Um exemplo que ajuda a perceber os conceitos chaves por agora.
+							<br>
+						</p>
+						<br>
+						<div class="container-fluid">
+							<table class="table">
+								<thead>
+									<th>Fortran</th>
+									<th>C/C++</th>
+								</thead>
+								<tbody>
+									<tr>
+										<td>
+											PROGRAM HELLO
+ 
+ !   Zona de paralelizacao  
+!$OMP PARALLEL 
+ 
+ !     Imprimir a mensagem “Hello World!”
+       PRINT *, 'Hello World!'
+ 
+ !     Acontece o join das threads, restando apenas a master
+ !$OMP END PARALLEL
+ 
+        END
+
+										</td>
+										<td>
+
+#include <omp.h>
+ 
+ int main(int argc, char *argv[]) {
+ 
+ /* Zona de paralelizacao  */
+ #pragma omp parallel
+   {
+ 
+   /* Imprimir a mensagem “Hello World!” */
+   printf("Hello World! \n");
+ 
+   }  /*Acontece o join das threads, restando apenas a master */
+ Return 0;
+ }
+
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="container-fluid"><b>ALERTA:</b> Para além das diretivas, caso usemos bibliotecas de execução ou as variáveis de ambiente não nos podemos esquecer da biblioteca <omp.h> em C/C++. </div>
+						<hr>
+						<div class="container-fluid">
+							<h4>Erros comuns:</h4>
+							<div class="container-fluid">
+								<ul>
+									<li>
+										Não utilização da diretiva omp.
+									</li>
+								</ul>
+							</div>
+							<b>Incorreto</b>
+							<p>
+								#pragma omp parallel num_threads(2)  
+{  
+   #pragma single  
+   {  
+     printf("me\n");  
+   }  
+}
+
+							</p>
+							<br>
+							<b>Correto</b>
+							<p>
+								#pragma omp parallel num_threads(2)  
+{  
+   #pragma omp single  
+   {  
+     printf("me\n");  
+   }  
+}  
+
+							</p>
+						</div>
+
+						A frase “me”, no primeiro caso, irá aparecer duas vezes, não uma, como é suposto. No primeiro caso, o erro acontece, pois quando não se utiliza a diretiva omp, o programa, não reconhece o comando, ou seja, irá ignorar o single, e irá utilizar dois threads para imprimir a frase “me”.
+
+					</div>
+
+					<hr>
+
+					<div class="container-fluid">
+						<center><h3>Diretiva Parallel</h3></center>
+						<p>
+							Como o nome diz, define uma região em paralelo onde o código irá ser executado por múltiplos threads em paralelo. Exceto para as “work-sharing constructs”, em que o trabalho é dividido pelos vários threads. Iremos ver isso mais adiante.
+						</p>
+						<div class="container-fluid">
+							<b>Sintaxe em C/C++:</b>
+							<br>
+							<code class="code">
+								#pragma omp parallel [cláusulas]  
+{
+  // código que será corrido em paralelo.
+} // final da região em paralelo
+
+						</code>
+						</div>
+						<br>
+						<div class="container-fluid">
+							<b>Sintaxe em Fortran:</b>
+							<br>
+							<code class="code">
+								!$OMP PARALLEL [cláusulas]  
+  // código que será corrido em paralelo.
+!$OMP END PARALLEL
+
+							</code>
+						</div>
+						<br>
+						<div class="container-fluid">
+							<b>Exemplo do programa ATM.c:</b>
+							<br>
+							<code class="code">
+    #pragma omp parallel num_threads(N)
+    {
+
+        int thread_id = omp_get_thread_num();
+        //printf("thread %d começou!\n", thread_id);
+
+        cliente(thread_id);
+    }
+
+							</code>
+						</div>
+						<br>
+
+						<div class="container-fluid">
+							As cláusulas suportadas pelo parallel são:
+							<div class="container-fluid">
+								<ul>
+									<li>shared</li>
+									<li>private</li>
+									<li>firstprivate</li>
+									<li>default</li>
+									<li>firstprivate</li>
+									<li>copyin</li>
+									<li>num_threads</li>
+									<li>reduction</li>
+									<li>if</li>
+								</ul>
+							</div>
+						</div>
+						<b>Nota:</b> Mais à frente no tutorial, entraremos em mais detalhe em relação ao que faz cada uma destas cláusulas.
+						<br><br>
+						<b>Erros comuns:</b>
+						<ul><li><b>Não utilização da diretiva parallel.</b>
+
+						<div class="container-fluid">
+							<b>Incorreto:</b>
+							<br>
+							<code>
+								#pragma omp for  
+... //bloco_código
+							</code>
+							<br>
+							<b>Correto:</b>
+							<br>
+							<code>
+								#pragma omp parallel for   
+... //bloco_código
+							</code>
+						</div>
+						<p>
+							A diferença ocorre que no primeiro caso o programa irá ser executado apenas por um thread, ou seja sequencialmente. No entanto, no segundo caso é utilizada a paralelização, ou seja, o bloco de código será executado por diversas threads, tirando maior rentabilidade do programa.
+						</p>
+						</li>
+						<li>
+							<b>Utilização desnecessária de parallel</b>
+							<p>
+								Neste caso, o objectivo é partilhar um loop entre dois threads. No primeiro caso, o utilizador coloca um parallel dentro de um parallel. Isso fará com que a função “myFunc()” seja chamada 20 vezes, 10 vezes por cada thread. No segundo thread,  a remoção do parallel que se encontra no for faz com que o programa seja chamado 10 vezes, corrigindo o erro.
+							</p>
+						</li>
+					</ul>
+
+					<hr>
+					<center><h3>Diretiva – DO/for</h3></center>
+					<p>
+						Uma diretiva “work-sharing construct” que está dentro de uma zona paralela inicializada pela diretiva parallel. Esta diretiva faz com que o trabalho dentro de um ciclo for seja dividido pelos vários threads. Uma barrier é definida implicitamente no final da região da diretiva sections em questão, a menos que a cláusula nowait seja especificada.
+					</p>
+					<img src="img/img_1.png">
+					<div class="container-fluid">
+						<b>Exemplo de sintaxe em C/C++:</b>
+						<br>
+						<code>
+							#pragma omp for [cláusulas]
+   // ciclo for
+
+						</code>
+					</div>
+
+					<div class="container-fluid">
+						<h4>Sintaxe em Fortran:</h4>
+						<code>
+							!$OMP DO [cláusulas]  
+  // código que será corrido em paralelo.
+!$OMP END DO [NOWAIT]
+
+
+						</code>
+					</div>
+
+					<p>
+						As cláusulas (opcionais) suportadas por esta diretiva são:
+					</p>
+					<div class="container-fluid">
+						<ul>
+							<li>schedule</li>
+							<li>private</li>
+							<li>firstprivate</li>
+							<li>lastprivate</li>
+							<li>ordered</li>
+							<li>reduction</li>
+							<li>nowait</li>
+						</ul>
+					</div>
+					<p>
+						<b>Nota:</b>Mais à frente no tutorial, entraremos em mais detalhe em relação ao que faz cada uma destas cláusulas.
+					</p>
+
+					<div class="container-fluid">
+						<b>Erros comuns:</b>
+						<ul>
+							<li>
+								Não utilização da diretiva for.
+								<div class="container-fluid">
+									<b>Incorreto:</b>
+									<br>
+									<code>
+										#pragma omp parallel num_threads(2)  
+for (int i = 0; i < 10; i++)  
+   myFunc();
+
+									</code>
+									<br>
+									<b>Correto:</b>
+									<br>
+									<code>
+										#pragma omp parallel for num_threads(2)  
+for (int i = 0; i < 10; i++)  
+   myFunc(); 
+									</code>
+									<br>
+									<p>
+										Neste caso, o objectivo é partilhar um loop entre dois threads. No primeiro caso, a inexistência da diretiva for no “#pragma omp parallel”, faz com que o código seja executado uma vez em cada um dos threads, fazendo com que a função “myFunc()” seja chamada 20 vezes. No segundo caso, o loop é partilhado, fazendo com que a função “myFunc()” seja chamada 10 vezes.
+									</p>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<hr>
+					<center><h3>Diretiva - sections</h3></center>
+					<p>
+						As sections identifica partes do código na região em paralelo que irão ser divididas entre as várias Threads disponíveis, podendo concluir, então, que é uma “work-sharing construct”. Uma barrier é definida implicitamente no final da região da diretiva sections em questão, a menos que a cláusula nowait seja especificada. 
+					</p>
+					<img src="img/img_2.png">
+					<div class="container-fluid">
+						<b>Exemplo de sintaxe em C/C++:</b>
+						<br>
+						<code>
+							#pragma omp sections [cláusulas] 
+   {  
+      #pragma omp section
+         //código que fará parte desta secção
+
+      #pragma omp section
+         //código que fará parte desta secção
+
+   } // final do código por secções
+
+						</code>
+						<br>
+						<b>Sintaxe em Fortran:</b>
+						<br>
+						<code>
+							
+!$OMP SECTIONS [cláusulas]  
+
+!$OMP SECTION
+   //código que fará parte desta secção
+
+!$OMP SECTION
+  //código que fará parte desta secção
+
+!$OMP END SECTIONS [NOWAIT]
+
+						</code>
+					</div>
+
+					<p>
+						As cláusulas (opcionais) suportadas por esta diretiva são:
+					</p>
+					<div class="container-fluid">
+						<ul>
+							<li>private</li>
+							<li>firstprivate</li>
+							<li>lastprivate</li>
+							<li>reduction</li>
+							<li>nowait</li>
+						</ul>
+					</div>
+					<div class="container-fluid">
+						<p>
+							<b>Nota:</b> Mais à frente no tutorial, entraremos em mais detalhe em relação ao que faz cada uma destas cláusulas.
+						</p>
+					</div>
+					<hr>
+					<center><h3>Diretiva – single</h3></center>
+					<p>
+						Esta diretiva indica que o bloco de código abrangido por ela será corrido apenas por um thread, não sendo necessariamente o master threads. Apesar de não ser tão óbvio, estamos perante uma “work-sharing construct”, pois o trabalho é distribuído por um thread apenas. Uma barrier é definida implicitamente no final da região da diretiva single, a menos que a cláusula nowait seja especificada.
+					</p>
+					<img src="img/img_3.png">
+					<div class="container-fluid">
+						<b>Exemplo de sintaxe em C/C++:</b>
+						<br>
+						<code>
+							#pragma omp single [cláusulas]   
+{  
+   //código que irá correr numa única thread   
+     } 
+
+						</code>
+						<br>
+						<b>Sintaxe em Fortran:</b>
+						<br>
+						<code>
+							
+!$OMP SINGLE [cláusulas]  
+   //código que irá correr numa única thread   
+!$OMP END SINGLE [NOWAIT]
+
+						</code>
+					</div>
+					<div class="container-fluid">
+						<p>
+							As cláusulas (opcionais) suportadas por esta diretiva são:
+						</p>
+						<ul>
+							<li>private</li>
+							<li>firstprivate</li>
+							<li>copyprivate</li>
+							<li>nowait</li>
+						</ul>
+					</div>
+					<p>
+						<b>Nota:</b> Mais à frente no tutorial, entraremos em mais detalhe em relação ao que faz cada uma destas cláusulas.
+					</p>
+
+					<hr>
+					<center><h3>Diretiva combinadas – parallel DO/for, parallel sections</h3></center>
+					<p>
+						Estas diretivas são meramente convenientes, pois na maior parte comportam se de igual forma a uma diretiva parallel individual, sendo imediatamente seguida por uma diretiva de “work-sharing directive”. Os objetivos destas diretivas são as de reduzir o número de instruções OpenMP para determinadas regiões paralelas para melhor compreensão do código.
+					</p>
+					<p>
+						A maioria das regras, cláusulas e restrições que se aplicam a ambas as diretivas estão em vigor. Para mais detalhe é melhor ver a API do OpenMP.
+					</p>
+
+					<hr>
+
+					<center><h3>Diretiva – barrier</h3></center>
+					<p>
+						Esta diretiva tem como função ser um ponto de sincronização, ou seja, todos os threads ao chegar a este ponto terão de esperar pelas outras. Depois do barrier, a execução continua em paralelo.
+					</p>
+
+					<div class="container-fluid">
+						<b>Exemplo de sintaxe em C/C++:</b>
+						<br>
+						<code>
+							#pragma omp barrier
+						</code>
+						<br>
+						<b>Sintaxe em Fortran:</b>
+						<br>
+						<code>
+							!$OMP BARRIER
+						</code>
+					</div>
+					<p>
+						A diretiva barrier não suporta qualquer tipo de cláusula.
+					</p>
+
+					<hr>
+
+					<center><h3>Diretiva – critical</h3></center>
+					<p>
+						Esta diretiva indica especifica que o bloco de código abrangido por ela só poderá ser executado por um thread de cada vez.
+					</p>
+					<div class="container-fluid">
+						<b>Exemplo de sintaxe em C/C++:</b>
+						<br>
+						<code>
+							#pragma omp critical [(nome)]   
+{  
+   //código que irá correr num thread de cada vez  
+     }
+
+						</code>
+						<br>
+						<b>Sintaxe em Fortran:</b>
+						<br>
+						<code>
+							
+!$OMP CRITICAL [(nome)]  
+   //código 
+!$OMP END CRITICAL [(nome)]
+
+						</code>
+					</div>
+					<p>
+						O nome (opcional) é o identificador para a zona crítica. Sendo que zonas críticas sem nome irão ser consideradas a mesma zona crítica.
+					</p>
+					<p>
+						<b>ALERTA:</b> O nome, caso presente tem de estar dentro de parênteses curvos.
+					</p>
+					<p>
+						A diretiva critical não suporta qualquer tipo de cláusula.
+					</p>
+					<div class="container-fluid">
+						<b>Exemplo do programa ATM.c:</b>
+						<br>
+						<code>
+							
+// Espera por todos os clientes para efetuarem todas
+    // as ações ao mesmo tempo
+    #pragma omp critical (transacao)
+    {
+        // Se o cliente avisou que queria fazer um depósito, irá
+        // Efetuar um depósito. Os clientes que pretendem efetuar
+        // um depósito têm prioridade sobre os que pretendem
+        // levantar.
+        if(action == 1) {
+            deposito(quantia);
+            printf("[%d] %d foram depositados da sua conta.\nSaldo atual: %d\n", id, quantia, dinheiro);
+        }
+
+        // Se o cliente avisou que queria fazer um levantamento e
+        // possui saldo suficiente na conta para o efetuar, então
+        // irá efetuar um levantamento.
+        else if(action == 2 && quantia <= dinheiro) {
+        
+            levantamento(quantia);
+            printf("[%d] %d foram levantados da sua conta.\nSaldo atual: %d\n",id, quantia, dinheiro);
+        }
+
+        // Caso o utilizador não possua saldo suficiente, irá
+        // avisar.
+        else if(action == 2) {
+            printf("[%d] ERRO: Saldo insuficiente.\n", id);
+        }
+
+        // Caso nenhuma das condições tenham sido atingidas, quer
+        // dizer que algo no programa falhou.
+        else {
+            printf("[%d] ERRO\n", id);
+        }
+    }
+						</code>
+					</div>
+
+					<hr>
+
+					<center><h3>Diretiva – atomic</h3></center>
+					<p>
+						Esta diretiva é muitas vezes confundida com a diretiva critical, pois as funcionalidades são bastantes parecidas. A diretiva especifica que uma parte da memória irá ser atualizada atomicamente, em vez de vários threads tentarem atualizá-la (write), enquanto a diretiva critical delimita zonas.
+					</p>
+
+					<div class="container-fluid">
+						<b>Exemplo de sintaxe em C/C++:</b>
+						<br>
+						<code>
+							#pragam omp atomic  
+   expressão
+
+						</code>
+						<br>
+						<b>Sintaxe em Fortran:</b>
+						<br>
+						<code>
+							!$OMP ATOMIC
+   expressão
+
+						</code>
+						<br>
+						<b>Exemplo do somatório:</b>
+						<br>
+						<code>
+							void somatorio(double n) {
+    // Cria uma região paralela que será percorrida por
+    // N threads
+    #pragma omp parallel num_threads(N)
+    {
+        // Inicializa a variável id, que representa o número do thread
+        int id = omp_get_thread_num();
+
+        // Inicializa o mínimo e o máximo que o thread vai contar
+        int min = id * n/N + 1;
+        int max = (id+1) * n/N;
+        printf("[%d] min = %d ; max = %d\n",id, min, max);
+        // Como a obtenção do resultado é uma "mini" secção crítica,
+        // foi declarada uma zona atómica, onde o resultado irá ser incrementado
+        int sum = sum_until(min, max);
+        #pragma omp atomic
+            result = result + sum;
+    }
+
+    printf("Resultado: %d\n", result);
+}
+
+						</code>
+					</div>
+					<p>
+						A expressão de código que contém a alocação de memória que queremos proteger contra várias atualizações (write).
+					</p>
+					<p>
+						A diretiva atomic não suporta qualquer tipo de cláusula.
+					</p>
+
+					<hr>
+
+					<center><h3>Diretiva – master</h3></center>
+					<p>
+						Esta diretiva especifica que só quem pode executar aquele bloco de código é o master thread.
+					</p>
+
+					<div class="container-fluid">
+						<b>Exemplo de sintaxe em C/C++:</b>
+						<br>
+						<code>
+							#pragma omp master  
+{  
+   //bloco de código  
+} 
+
+						</code>
+						<br>
+						<b>Sintaxe em Fortran: </b>
+						<br>
+						<code>
+							!$OMP MASTER  
+   //código 
+!$OMP END MASTER
+
+						</code>
+					</div>
+					<p>
+						A diretiva master não suporta qualquer tipo de cláusula.
+					</p>
+
+					<hr>
+
+					<center><h3>Diretiva – flush</h3></center>
+					<p>
+						Esta diretiva é uma das mais diretivas de sincronização, especificando que, numa zona paralela, todas as threads têm a mesma exibição de memória de objetos especificados na memória.
+					</p>
+
+					<div class="container-fluid">
+						<b>Exemplo de sintaxe em C/C++:</b>
+						<br>
+						<code>
+							#pragma omp flush [(lista_variaveis)]
+						</code>
+						<br>
+						<b>Sintaxe em Fortran: </b>
+						<br>
+						<code>
+							!$OMP FLUSH [(lista variáveis)]
+						</code>
+					</div>
+					<p>
+						A lista_variaveis (opcional) é os vários objetos que queremos sincronizar. Se esta lista não for especificada todas os objetos partilhados serão sincronizados.
+					</p>
+					<p>
+						A diretiva flush não suporta qualquer tipo de cláusula.
+					</p>
+					<p>
+						A diretiva flush aparece em conjunção com as seguintes diretivas:
+					</p>
+					<div class="container-fluid">
+						<ul>
+							<li>antes de uma omp barrier</li>
+							<li>Entrada e saída de uma omp critical.</li>
+							<li>Saída de omp parallel.</li>
+							<li>Saída de uma omp for.</li>
+							<li>Saída de uma omp sections.</li>
+							<li>Saída de uma omp single.</li>
+						</ul>
+					</div>
+
+					<hr>
+
+					<center><h3>Diretiva – ordered</h3></center>
+					<p>
+						Esta diretiva especifica que um trabalho dentro de um ciclo for dentro de uma região paralela deve ser executada de forma sequencial.
+					</p>
+
+					<div class="container-fluid">
+						<b>Exemplo de sintaxe em C/C++:</b>
+						<br>
+						<code>
+							#pragma omp ordered  
+   //bloco com o ciclo for
+
+						</code>
+						<br>
+						<b>Sintaxe em Fortran:</b>
+						<br>
+						<code>
+							!$OMP ORDERED  
+   //bloco com o ciclo for
+!$OMP END ORDERED 
+
+						</code>
+					</div>
+					<p>
+						A diretiva ordered tem de estar dentro de uma diretiva for ou parallel for com a cláusula ordered.
+					</p>
+					<p>
+						A diretiva ordered não suporta qualquer tipo de cláusula.
+					</p>
+
+					<hr>
+
+					<center><h3>Diretiva – threadprivate</h3></center>
+					<p>
+						Esta diretiva especifica que uma ou mais variáveis são privadas para um thread, sendo que cada cópia dessas variáveis é inicializada antes de serem usadas pela primeira vez.
+					</p>
+					<div class="container-fluid">
+						<b>Exemplo de sintaxe em C/C++:</b>
+						<br>
+						<code>
+							#pragma omp threadprivate(vars)
+						</code>
+						<br>
+						<b>Sintaxe em Fortran:</b>
+						<br>
+						<code>
+							!$OMP THREADPRIVATE (/cb/, …) onde cb é o nome de um bloco comum
+						</code>
+					</div>
+					<p>
+						A vars é uma lista de variáveis separadas por vírgulas, que iremos querer tornar privadas num thread. vars deve ser “named file-scope, namespace-scope, or static block-scope variables”.
+					</p>
+					<p>
+						A diretiva threadprivate não suporta qualquer tipo de cláusula.
+					</p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

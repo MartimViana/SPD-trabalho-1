@@ -24,39 +24,89 @@
 				<center>
 					<div class="jumbotron">
 						<!-- SECTION TITLE -->
-						<h1>Introdução</h1>
+						<h2>Introdução</h2>
 					</div>
 				</center>
 			</div>
-			<div class="row" style>
+			<div class="row">
 				<!-- MAIN NAVIGATION TAB -->
 				<div class="col-sm-2">
-					<nav class="container">
-						<ul class="nav navbar-default">
-							<li><a class="navbar-brand">Índice</a></li>
+					<nav class="container-fluid">
+						<ul class="nav navbar-nav">
+							<li><a href="index.html">O que é o OpenMP?</a></li>
 							<br>
 
-							<li class="active"><a href="#">Introdução</a></li>
+							<li class="active"><a href="tudo_pronto.html">Tudo pronto?</a></li>
 							<br>
 
-							<li><a href="">Estrutura</a></li>
+							<li><a href="diretivas.html">Diretivas</a></li>
 							<br>
 
-							<!-- Exemplos clássicos -->
+							<li><a href="clausulas.html">Cláusulas</a></li>
+							<br>
 
-							<!-- Erros -->
+							<li><a href="execucao.html">Bibliotecas de execução</a></li>
+							<br>
+
+							<li><a href="variaveis.html">Variáveis de ambiente</a></li>
+							<br>
+
+							<li><a href="exemplos.html">Exemplos clássicos</a></li>
+							<br>
+
+							<li><a href="erros.html">Erros frequentes</a></li>
+							<br>
+
+							<li><a href="referencias.html">Referências</a></li>
+							<br>
 						</ul>
 					</nav>
 				</div>
 				<!-- SECTION CONTENT -->
 				<div class="col-sm-14">
 					<p>
-						Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+						O OpenMP (Open Multi-Processing), é uma interface de programação (API) portátil, usada para programação paralela com memória partilhada para arquiteturas de múltiplos processadores, para as linguagens de programação de C, C++ e Fortran. OpenMP implementa o uso de multithreading através do modelo “fork & join”. O openMP é composto por 3 componentes principais da API, sendo estes: diretivas de compilador, biblioteca de execução e variáveis de ambiente.
 					</p>
 
-					<p>
-						Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-					</p>
+					<div class="container-fluid">
+						<h4>Vantagens:</h4>
+						<ul>
+							<li>Simples: não precisa lidar com a passagem de mensagens como acontece no Message Passing Interface (MPI), sendo mais fácil de usar e de corrigir em caso de bug do que MPI; </li>
+							<li>Código multithreading portátil;</li>
+							<li>Código fácil de ler e compreender;</li>
+							<li>Diretivas podem ser adicionadas incrementalmente - paralelização incremental;</li>
+							<li>As diretivas de compilador e as bibliotecas de execução são chamadas em comentário, tornando possível executar o programa em série utilizando compiladores sequenciais;</li>
+							<li>Nenhuma ou pouca modificação (de fácil alteração) de instruções de código em série para instruções de código paralelo.</li>
+						</ul>
+						<br>
+						<h4>Desvantagens:</h4>
+						<ul>
+							<li>Só é executado de forma eficiente em multiprocessadores com memória compartilhada;</li>
+							<li>Necessita de um compilador que suporta OpenMP;</li>
+							<li>Mais usado para paralelização de ciclos;</li>
+							<li>A escalabilidade é limitada pela arquitetura de memória;</li>
+							<li>Não está presente o tratamento de forma segura do erro.</li>
+						</ul>
+					</div>
+					<div class="container-fluid">
+						<h4>Pré-requisitos</h4>
+						<p>
+							Para este tutorial será necessário que o utilizador já tenha algumas noções sobre modelos de sistemas de programação paralela e linguagem em que irá programar (C/C++ ou Forthan). Resumidamente, os conceitos mais importantes são:
+						</p>
+						<div class="container-fluid">
+							<ul>
+								<li><b>Paralelismo baseado em threads:</b> Consiste na existência de um processo em que partilha memória entre múltiplos threads. Caso o processo termine, os threads deixam de existir.</li><br>
+								<li><b>Paralelismo explícito:</b> O OpenMP é um recurso de programação paralela que dá ao programador total controlo sobre a paralelização do código, desde a simples inserção de diretivas de compiladores num programa que corre em série, até à inserção complexa de sub-rotinas para configurar vários níveis de paralelismo e locks.</li><br>
+								<li><b>Modelo “Fork & Join”:</b> É um modelo de paralelização onde o “master thread” subdivide-se, através de fork, num número específico de “threads escravos”, sendo as tarefas divididas entre eles. Visto que os threads são executados simultaneamente, há momentos na execução do programa onde os “threads escravos” terminam e voltam apenas a um único thread, o “master thread”. Esse momento final que delimita o final da região em paralelo, denomina-se join.</li><br>
+								<li><b>Baseado em diretivas de compilador:</b> No OpenMP, todo o paralelismo é definido através de diretivas de compilador.</li><br>
+								<li><b>Suporta paralelismo recursivo:</b> O OpenMP permite a implementação de “nested parallelism”, ou seja, é possível a criação e execução de um sistema paralelo dentro de outro sistema paralelo.</li><br>
+								<li><b>Threads dinâmicos:</b> O OpenMP permite a alteração do número de threads criadas durante a execução do programa.</li><br>
+								<li><b>Suporte de “data scoping”:</b> O OpenMP permite ao programador especificar quando é que os dados/variáveis serão partilhados ou privados.</li><br>
+							</ul>
+						</div>
+
+					</div>
+
 				</div>
 			</div>
 		</div>
