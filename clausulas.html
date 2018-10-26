@@ -1,0 +1,275 @@
+<html>
+	<head>
+		<!-- Use the bootstrap as design reference -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+ 		<!-- Set character set to display latin characters -->
+ 		<meta charset="UTF-8">
+
+ 		<!-- Set author -->
+ 		 <meta name="author" content="Group 8">
+ 		 
+ 		<!-- Website title -->
+		<title>Tutorial SPD</title>
+	</head>
+
+	<body>
+		<!-- 
+			Tópicos: Introdução, estrutura, narrativa, exemplos clássicos, erros (no meio da narrativa)
+		-->
+		<div class="container" style="width: 90%">
+			<div class="row">
+				<center>
+					<div class="jumbotron">
+						<!-- SECTION TITLE -->
+						<h2>Cláusulas</h2>
+					</div>
+				</center>
+			</div>
+			<div class="row">
+				<!-- MAIN NAVIGATION TAB -->
+				<div class="col-sm-2">
+					<nav class="container-fluid">
+						<ul class="nav navbar-nav">
+							<li><a href="index.html">O que é o OpenMP?</a></li>
+							<br>
+
+							<li class="active"><a href="tudo_pronto.html">Tudo pronto?</a></li>
+							<br>
+
+							<li><a href="diretivas.html">Diretivas</a></li>
+							<br>
+
+							<li><a href="clausulas.html">Cláusulas</a></li>
+							<br>
+
+							<li><a href="execucao.html">Bibliotecas de execução</a></li>
+							<br>
+
+							<li><a href="variaveis.html">Variáveis de ambiente</a></li>
+							<br>
+
+							<li><a href="exemplos.html">Exemplos clássicos</a></li>
+							<br>
+
+							<li><a href="erros.html">Erros frequentes</a></li>
+							<br>
+
+							<li><a href="referencias.html">Referências</a></li>
+							<br>
+						</ul>
+					</nav>
+				</div>
+				<!-- SECTION CONTENT -->
+				<div class="col-sm-14">
+					<p>
+						Em programação OpenMP é importante entender como é utilizado os dados em um thread (“Data scope”), devido ao facto de este ser baseado no modelo de programação de memória compartilhada, a maioria das variáveis são compartilhadas entre os threads por definição (Variáveis Globais).
+					</p>
+					<p>
+						Temos ainda as variáveis não compartilhadas, locais, privadas que provém de índices de ciclos ou de sub-rotinas.
+					</p>
+
+					<hr>
+
+					<center><h3>Cláusulas – private</h3></center>
+
+					<div class="container-fluid">
+						<b>Sintaxe em C/C++:</b> private(list)
+						<br>
+						<b>Sintaxe em Fortran:</b> PRIVATE(list)
+					</div>
+					<p>
+						Declara que as variáveis listadas serão de uso individual de cada thread.
+					</p>
+
+					<hr>
+
+					<center><h3>Cláusulas – shared</h3></center>
+					<div class="container-fluid">
+						<b>Sintaxe em C/C++:</b> shared(list)
+						<br>
+						<b>Sintaxe em Fortran:</b> SHARED(list)
+					</div>
+					<p>
+						Declara que as variáveis listadas irão compartilhar o seu conteúdo com todos os threads da região em paralelo. Assim sendo, é só necessário um endereço de memória para guardar as variáveis, que pode ser lido e escrito por todos os threads.
+					</p>
+
+					<hr>
+					
+					<center><h3>Cláusulas – default</h3></center>
+					<p>
+						Permite que o programador defina qual será o “data scope” padrão (“default”) para as variáveis de uma zona paralela. Sendo os atributos possíveis entre: private, shared ou none.
+					</p>
+					<p>
+						Ao especificar default(none)requer que cada variável deva ser explicitamente incluída numa das listas das cláusulas de “data scope” com exceção das variáveis que são:
+					</p>
+					<div class="container-fluid">
+						<ul>
+							<li>Constantes</li>
+							<li>Especificado numa cláusula de atributos de “data scope” fechado</li>
+							<li>Variáveis usadas como controlo de ciclos em omp for ou omp parallel for</li>
+						</ul>
+					</div>
+
+					<hr>
+
+					<center><h3>Cláusulas – firstprivate</h3></center>
+					<div class="container-fluid">
+						<b>Sintaxe em C/C++:</b> firstprivate(list)
+						<br>
+						<b>Sintaxe em Fortran:</b> FIRSTPRIVATE(list)
+					</div>
+					<p>
+						Define uma lista de variáveis com o atributo PRIVATE, mas são inicializadas automaticamente com os valores que tinham no “master thread” antes da região paralela.
+					</p>
+
+					<hr>
+
+					<center><h3>Cláusulas – lastprivate</h3></center>
+					<p>
+						Define uma lista de variáveis com o atributo PRIVATE e copia o valor da última iteração de um ciclo do último thread que já terminou o seu trabalho.
+					</p>
+
+					<hr>
+
+					<center><h3>Cláusulas – reduction</h3></center>
+					<div class="container-fluid">
+						<b>Sintaxe em C/C++:</b> reduction(operator: list)
+						<br>
+						<b>Sintaxe em Fortran:</b> REDUCTION(operator: list)
+					</div>
+					<p>
+						Executa uma redução em todas as variáveis ​​escalares na lista usando o operador especificado, sendo que as variáveis ​​de redução na lista são separadas por vírgulas.
+					</p>
+					<p>
+						Para as variáveis especificadas na cláusula reduction, deverão satisfazer as seguintes condições:
+					</p>
+					<div class="container-fluid">
+						<ul>
+							<li>Deverão ser do tipo apropriado do operator.</li>
+							<li>Deve ser compartilhado (shared) no contexto de inclusão.</li>
+							<li>Não deve ser classificado como constante.</li>
+							<li>Não deve ter tipo de ponteiro.</li>
+						</ul>
+					</div>
+
+					<hr>
+
+					<center><h3>Cláusulas – if</h3></center>
+					<div class="container-fluid">
+						<b>Sintaxe em C/C++:</b> if(exp)
+						<br>
+						<b>Sintaxe em Fortran:</b> IF(exp)
+					</div>
+					<p>
+						Quando o argumento if especificado o código do programa é executado em paralelo se a expressão for avaliada com um valor diferente de zero, em C/C++ ou com o valor TRUE em Fortran, no tempo de execução, caso contrário correrá em série. Apenas uma cláusula if poderá ser especificada.
+					</p>
+					<p>
+						Para as variáveis especificadas na cláusula reduction, deverão satisfazer as seguintes condições:
+					</p>
+					<div class="container-fluid">
+						<ul>
+							<li>Deverão ser do tipo apropriado do operator.</li>
+							<li>Deve ser compartilhado (shared) no contexto de inclusão.</li>
+							<li>Não deve ser classificado como constante.</li>
+							<li>Não deve ter tipo de ponteiro.</li>
+						</ul>
+					</div>
+
+					<hr>
+
+					<center><h3>Cláusulas – nowait</h3></center>
+					<div class="container-fluid">
+						<b>Sintaxe em C/C++:</b> nowait
+						<br>
+						<b>Sintaxe em Fortran:</b> NOWAIT
+					</div>
+					<p>
+						Esta cláusula permite evitar a barrier no final das diretivas.
+					</p>
+					<p>
+						<b>ALERTA:</b> Esta cláusula não deverá ser usada em simultâneo com a cláusula copyprivate.
+					</p>
+
+					<hr>
+
+					<center><h3>Cláusulas – num_threads</h3></center>
+					<div class="container-fluid">
+						<b>Sintaxe em C/C++:</b> num_threads(int_var)
+						<br>
+						<b>Sintaxe em Fortran:</b> NUM_THREADS(int_var)
+					</div>
+					<p>
+						Esta cláusula configura o número de threads da região em paralelo para int_var, mas apenas se o ajustamento dinâmico do número de threads estiver ativado.
+					</p>
+
+					<hr>
+
+					<center><h3>Cláusulas – ordered</h3></center>
+					<div class="container-fluid">
+						<b>Sintaxe em C/C++:</b> ordered
+						<br>
+						<b>Sintaxe em Fortran:</b> ORDERED
+					</div>
+					<p>
+						Esta cláusula só deverá se usada para indicar se uma “ordered construct” está presente dentro da extensão dinâmica da diretiva.
+					</p>
+
+					<hr>
+
+					<center><h3>Cláusulas – schedule</h3></center>
+					<div class="container-fluid">
+						<b>Sintaxe em C/C++:</b> schedule(type[,size])
+						<br>
+						<b>Sintaxe em Fortran:</b> SCHEDULE(type[,size])
+					</div>
+					<p>
+						Específica como é que as várias interações do ciclo for estão divididas entre os threads disponíveis.
+					</p>
+					<p>
+						Os types aceitáveis são:
+					</p>
+					<div class="container-fluid">
+						<ul>
+							<li><b>auto:</b> A tarefa de agendamento (“scheduling”) estará encarregue do compilador e do sistema de execução, sendo que estes poderão escolher qualquer uma das outras possíveis agendamentos.</li>
+							<li><b>dynamic:</b> As interações de um ciclo são divididas em blocos de tamanho máximo (número de interações a dividir pelo número de threads). Depois, os blocos (chunks) são atribuídos aos threads ativos, utilizando a simbologia “first-come, first-do.</li>
+							<li><b>dynamic,n:</b> Como o de cima, só que os blocos agora tem tamanho n. n deverá ser um inteiro de valor maior ou igual a 1.</li>
+							<li><b>guided:</b> Os blocos são reduzidos de tamanho progressivamente até um tamanho mínimo dado por padrão. O valor do primeiro bloco é o valor da divisão do número de interações pelo número de threads. O valor mínimo para o bloco (chunck) é de 1.</li>
+							<li><b>guided,n:</b> Igual ao de cima só que o valor mínimo para o “chunck” é delimitado por n, sendo que n deverá ser um inteiro de valor maior ou igual a 1.</li>
+							<li><b>runtime:</b> A política de agendamento é determinada em tempo de execução pela variável de ambiente OMP_SCHEDULE para configurar o tipo de agendamento e o tamanho do bloco.</li>
+							<li><b>static:</b> As interações de um ciclo são divididas em “chunks” de tamanho igual a divisão do número de interações pelo número de threads. Cada thread está associado a um “chunk” diferente.</li>
+							<li><b>static,n:</b> Cada bloco tem agora tamanho n e cada bloco está associado a um thread com agendamento round-robin. O n deverá ser um inteiro entre 1 e um número mais alto.</li>
+						</ul>
+					</div>
+
+					<hr>
+
+					<center><h3>Cláusulas – copyin </h3></center>
+					<div class="container-fluid">
+						<b>Sintaxe em C/C++:</b> copyin(list)
+						<br>
+						<b>Sintaxe em Fortran:</b> COPYIN(list)
+					</div>
+					<p>
+						Para cada variável específica na list, o valor da variável no “master thread” é copiado para o thread-private copiada no início da região paralela.  As variáveis do copyin deverão ser variáveis threadprivate.
+					</p>
+
+					<hr>
+
+					<center><h3>Cláusulas – copyprivate</h3></center>
+					<div class="container-fluid">
+						<b>Sintaxe em C/C++:</b> copyprivate(list)
+						<br>
+						<b>Sintaxe em Fortran:</b> COPYPRIVATE(list)
+					</div>
+					<p>
+						Especifica que para cada variável presente na list, no final da execução da diretiva ao thread deverá passar o valor entre os restantes threads. Normalmente esta cláusula está associada a diretiva single. Ou seja, antes de o thread chegar ao ponto da barrier, irá se realizar broadcast de todas as variáveis presentes na lista.
+					</p>
+				</div>
+			</div>
+		</div>
+
+	</body>
+</html>
