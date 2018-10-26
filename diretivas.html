@@ -817,6 +817,46 @@ for (int i = 0; i < 10; i++)
 					<p>
 						A diretiva threadprivate não suporta qualquer tipo de cláusula.
 					</p>
+					<div class="container-fluid">
+						<b>Erros comuns:</b>
+						<ul>
+							<li>
+								Uso incorreto da cláusula ordered
+								<div class="container-fluid">
+									<b>Incorreto:</b>
+									<br>
+									<code>
+										#pragma omp parallel num_threads(2)  
+{  
+    #pragma omp parallel for  
+    for (int i = 0; i < 10; i++)  
+    {  
+         myFunc();  
+    }  
+}
+
+									</code>
+									<br>
+									<b>Correto:</b>
+									<br>
+									<code>
+										#pragma omp parallel num_threads(2)  
+{  
+    #pragma omp for  
+    for (int i = 0; i < 10; i++)  
+    {  
+         myFunc();  
+    }  
+}
+
+									</code>
+								</div>
+								<p>
+									Neste caso, o objectivo é partilhar um loop entre dois threads. No primeiro caso, o utilizador coloca um parallel dentro de um parallel. Isso fará com que a função “myFunc()” seja chamada 20 vezes, 10 vezes por cada thread. No segundo thread,  a remoção do parallel que se encontra no for faz com que o programa seja chamado 10 vezes, corrigindo o erro.
+								</p>
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
