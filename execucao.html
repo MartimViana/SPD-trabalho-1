@@ -1,0 +1,214 @@
+<html>
+	<head>
+		<!-- Use the bootstrap as design reference -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+ 		<!-- Set character set to display latin characters -->
+ 		<meta charset="UTF-8">
+
+ 		<!-- Set author -->
+ 		 <meta name="author" content="Group 8">
+ 		 
+ 		<!-- Website title -->
+		<title>Tutorial SPD</title>
+	</head>
+
+	<body>
+		<!-- 
+			Tópicos: Introdução, estrutura, narrativa, exemplos clássicos, erros (no meio da narrativa)
+		-->
+		<div class="container" style="width: 90%">
+			<div class="row">
+				<center>
+					<div class="jumbotron">
+						<!-- SECTION TITLE -->
+						<h2>Bibliotecas de execução</h2>
+					</div>
+				</center>
+			</div>
+			<div class="row">
+				<!-- MAIN NAVIGATION TAB -->
+				<div class="col-sm-2">
+					<nav class="container-fluid">
+						<ul class="nav navbar-nav">
+							<li><a href="index.html">O que é o OpenMP?</a></li>
+							<br>
+
+							<li><a href="tudo_pronto.html">Tudo pronto?</a></li>
+							<br>
+
+							<li><a href="diretivas.html">Diretivas</a></li>
+							<br>
+
+							<li><a href="clausulas.html">Cláusulas</a></li>
+							<br>
+
+							<li class="active"><a href="execucao.html">Bibliotecas de execução</a></li>
+							<br>
+
+							<li><a href="variaveis.html">Variáveis de ambiente</a></li>
+							<br>
+
+							<li><a href="exemplos.html">Exemplos clássicos</a></li>
+							<br>
+
+							<li><a href="erros.html">Erros frequentes</a></li>
+							<br>
+
+							<li><a href="referencias.html">Referências</a></li>
+							<br>
+						</ul>
+					</nav>
+				</div>
+				<!-- SECTION CONTENT -->
+				<div class="col-sm-14">
+					<p>
+						OpenMP fornece várias bibliotecas com rotinas para ajudá-lo a gerir o seu programa em modo paralelo. Como por exemplo verificar, determinar o número de threads, funções de bloqueio, cronometragem, etc...
+					</p>
+					<p>
+						Algumas das rotinas com a breve descrição encontram-se em baixo:
+					</p>
+					<div class="container-fluid">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Rotinas</th>
+									<th>Objetivo</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>OMP_SET_NUM_THREADS</td>
+									<td>Determina, dinamicamente, o número de threads para uma determinada região.</td>
+								</tr>								
+								<tr>
+									<td>OMP_GET_NUM_THREADS</td>
+									<td>Determina qual é o número atual de threads que podem ser executadas numa região.</td>
+								</tr>								
+								<tr>
+									<td>OMP_GET_MAX_THREADS</td>
+									<td>Obtém o número máximo de threads permitidas com essa implementação do OpenMP.</td>
+								</tr>								
+								<tr>
+									<td>OMP_GET_THREAD_NUM</td>
+									<td>Determina o número da thread que está a ser executada na secção atual.</td>
+								</tr>								
+								<tr>
+									<td>OMP_GET_THREAD_LIMIT</td>
+									<td>Retorna o número máximo de threads OpenMP disponíveis para um programa.</td>
+								</tr>								
+								<tr>
+									<td>OMP_GET_NUM_PROCS</td>
+									<td>Determina o número de processos na máquina.</td>
+								</tr>								
+								<tr>
+									<td>OMP_IN_PARALLEL</td>
+									<td>Retorna !=0 se for chamado dentro da extensão dinâmica de uma região paralela executando em paralelo, caso contrário, retorna zero.</td>
+								</tr>								
+								<tr>
+									<td>OMP_GET_DYNAMIC</td>
+									<td>Retorna !=0 se o ajuste dinâmico de threads estiver ativado, e retorna 0 caso aconteça o contrário.</td>
+								</tr>								
+								<tr>
+									<td>OMP_SET_NESTED</td>
+									<td>Ativa ou desativa o paralelismo aninhado. Se o parâmetro for !0, ativa. Por padrão, está desativado.</td>
+								</tr>								
+								<tr>
+									<td>OMP_GET_NESTED</td>
+									<td>Retorna sempre 0 na versão atual do compilador.</td>
+								</tr>								
+								<tr>
+									<td>OMP_SET_SCHEDULE</td>
+									<td>Define a política de agendamento de ciclo.</td>
+								</tr>								
+								<tr>
+									<td>OMP_GET_SCHEDULE</td>
+									<td>Retorna a política de agendamento de ciclo</td>
+								</tr>								
+								<tr>
+									<td>OMP_SET_MAX_ACTIVE_LEVELS</td>
+									<td>Define o número máximo de regiões paralelas aninhadas.</td>
+								</tr>								
+								<tr>
+									<td>OMP_GET_MAX_ACTIVE_LEVELS</td>
+									<td>Retorna o número máximo de regiões paralelas aninhadas.</td>
+								</tr>								
+								<tr>
+									<td>OMP_GET_LEVEL</td>
+									<td>Retorna o nível atual de regiões paralelas aninhadas.</td>
+								</tr>								
+								<tr>
+									<td>OMP_GET_ANCESTOR_THREAD_NUM</td>
+									<td>Retorna, para um determinado nível aninhado da thread atual, o número da thread antecessora.</td>
+								</tr>								
+								<tr>
+									<td>OMP_GET_TEAM_SIZE</td>
+									<td>Retorna, para um determinado nível aninhado da thread atual, o tamanho da equipa de threads.</td>
+								</tr>								
+								<tr>
+									<td>OMP_GET_ACTIVE_LEVEL</td>
+									<td>Retorna o número de regiões paralelas ativas aninhadas, incluindo a tarefa que contém a chamada.</td>
+								</tr>								
+								<tr>
+									<td>OMP_IN_FINAL</td>
+									<td>Retorna true se a rotina for executada na região final da tarefa; caso contrário, retorna falso.</td>
+								</tr>								
+								<tr>
+									<td>OMP_INIT_LOCK</td>
+									<td>Inicializa um bloqueio associado à variável de bloqueio.</td>
+								</tr>								
+								<tr>
+									<td>OMP_DESTROY_LOCK</td>
+									<td>Desassocia a variável de bloqueio fornecida de quaisquer bloqueios.</td>
+								</tr>								
+								<tr>
+									<td>OMP_SET_LOCK</td>
+									<td>Adquire a propriedade de um bloqueio.</td>
+								</tr>								
+								<tr>
+									<td>OMP_UNSET_LOCK</td>
+									<td>Acaba com o bloqueio.</td>
+								</tr>								
+								<tr>
+									<td>OMP_TEST_LOCK</td>
+									<td>Tenta definir um bloqueio, mas não bloqueia se o bloqueio não estiver disponível.</td>
+								</tr>								
+								<tr>
+									<td>OMP_INIT_NEST_LOCK</td>
+									<td>Inicializa um bloqueio aninhado associado à variável de bloqueio.</td>
+								</tr>								
+								<tr>
+									<td>OMP_DESTROY_NEST_LOCK</td>
+									<td>Desassocia a variável de bloqueio aninhada fornecida de quaisquer bloqueios.</td>
+								</tr>								
+								<tr>
+									<td>OMP_SET_NEST_LOCK</td>
+									<td>Adquire a propriedade de um bloqueio aninhado.</td>
+								</tr>								
+								<tr>
+									<td>OMP_UNSET_NEST_LOCK</td>
+									<td>Desassocia a variável de bloqueio aninhada fornecida de quaisquer bloqueios.</td>
+								</tr>								
+								<tr>
+									<td>OMP_TEST_NEST_LOCK</td>
+									<td>Tenta fazer um bloqueio aninhado, mas não bloqueia se o bloqueio não estiver disponível.</td>
+								</tr>								
+								<tr>
+									<td>OMP_GET_WTIME</td>
+									<td>Oferece uma temporização de relógio.</td>
+								</tr>								
+								<tr>
+									<td>OMP_GET_WTICK</td>
+									<td>Retorna um double que representa em segundos entre os “ticks” de relógio.</td>
+								</tr>								
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+</html>

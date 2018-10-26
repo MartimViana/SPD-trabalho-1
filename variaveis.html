@@ -1,0 +1,214 @@
+<html>
+	<head>
+		<!-- Use the bootstrap as design reference -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+ 		<!-- Set character set to display latin characters -->
+ 		<meta charset="UTF-8">
+
+ 		<!-- Set author -->
+ 		 <meta name="author" content="Group 8">
+ 		 
+ 		<!-- Website title -->
+		<title>Tutorial SPD</title>
+	</head>
+
+	<body>
+		<!-- 
+			Tópicos: Introdução, estrutura, narrativa, exemplos clássicos, erros (no meio da narrativa)
+		-->
+		<div class="container" style="width: 90%">
+			<div class="row">
+				<center>
+					<div class="jumbotron">
+						<!-- SECTION TITLE -->
+						<h2>Variáveis de ambiente</h2>
+					</div>
+				</center>
+			</div>
+			<div class="row">
+				<!-- MAIN NAVIGATION TAB -->
+				<div class="col-sm-2">
+					<nav class="container-fluid">
+						<ul class="nav navbar-nav">
+							<li><a href="index.html">O que é o OpenMP?</a></li>
+							<br>
+
+							<li><a href="tudo_pronto.html">Tudo pronto?</a></li>
+							<br>
+
+							<li><a href="diretivas.html">Diretivas</a></li>
+							<br>
+
+							<li><a href="clausulas.html">Cláusulas</a></li>
+							<br>
+
+							<li><a href="execucao.html">Bibliotecas de execução</a></li>
+							<br>
+
+							<li class="active"><a href="variaveis.html">Variáveis de ambiente</a></li>
+							<br>
+
+							<li><a href="exemplos.html">Exemplos clássicos</a></li>
+							<br>
+
+							<li><a href="erros.html">Erros frequentes</a></li>
+							<br>
+
+							<li><a href="referencias.html">Referências</a></li>
+							<br>
+						</ul>
+					</nav>
+				</div>
+				<!-- SECTION CONTENT -->
+				<div class="col-sm-14">
+					<p>
+						Variáveis de Ambiente são fornecidas para controlar a execução de código paralelo em tempo de execução, podendo controlar
+					</p>
+					<div class="container-fluid">
+						<ul>
+							<li>Definir o número de threads;</li>
+							<li>Especificar em quantas interações são divididos os ciclos;</li>
+							<li>Ativar/Desativar o “nested parallelism”;</li>
+							<li>Ativar/Desativar threads dinâmicos;</li>
+							<li>Definir o tamanho da pilha dos threads;</li>
+							<li>Entre outros.</li>
+						</ul>
+					</div>
+					<p>
+						O nome dessas variáveis deve vir sempre em letras maiúsculas.
+					</p>
+
+					<hr>
+
+					<center><h3>OMP_SCHEDULE</h3></center>
+					<p>
+						O valor dessa variável determina como as iterações de um ciclo são agendadas por entre os “threads”. Esta variável de ambiente é utilizada apenas para as diretivas DO, PARALLEL DO (Fortran) e for, parallel for (C/C++).
+					</p>
+					<div class="container-fluid">
+						<b>Exemplos:</b>
+						<br>
+						<p>
+							(Ambientes bsh/bash/ksh (Linux))
+							<br>
+							export OMP_SCHEDULE="guided, 6"
+							<br>
+							export OMP_SCHEDULE="static"
+						</p>
+					</div>
+
+					<hr>
+
+					<center><h3>OMP_NUM_THREADS</h3></center>
+					<p>
+						Especifica o número máximo de threads durante a execução da região paralela.
+					</p>
+					<div class="container-fluid">
+						<b>Exemplos:</b>
+						<br>
+						<p>
+							(Ambientes bsh/bash/ksh (Linux))
+							<br>
+							export OMP_NUM_THREADS=6
+						</p>
+					</div>
+
+					<hr>
+
+					<center><h3>OMP_DYNAMIC</h3></center>
+					<p>
+						Permite ou não, o ajuste dinâmico no número de threads para a execução de regiões paralelas. Valores possíveis TRUE ou FALSE.
+					</p>
+					<div class="container-fluid">
+						<b>Exemplos:</b>
+						<p>
+							(Ambientes bsh/bash/ksh (Linux))
+							<br>
+							export OMP_DYNAMIC=FALSE
+						</p>	
+					</div>
+
+					<hr>
+
+					<center><h3>OMP_NESTED</h3></center>
+					<p>
+						Especifica se permite ou não, o paralelismo recursivo.
+					</p>
+					<div class="container-fluid">
+						<b>Exemplos:</b>
+						<p>
+							(Ambientes bsh/bash/ksh (Linux))
+							<br>
+							export OMP_NESTED=FALSE
+						</p>
+					</div>
+
+					<hr>
+
+					<center><h3>OMP_PROC_BIND</h3></center>
+					<p>
+						Ativa ou desativada a ligação de threads para processadores. Os valores válidos são TRUE ou FALSE.
+					</p>
+					<div class="container-fluid">
+						<b>Exemplos:</b>
+						<p>
+							(Ambientes bsh/bash/ksh (Linux))
+							<br>
+							export OMP_PROC_BIND=FALSE
+						</p>
+					</div>
+
+					<hr>
+
+					<center><h3>OMP_STACKSIZE</h3></center>
+					<p>
+						Especifica o tamanho do “stack” dos threads criadas pela execução do OpenMP.
+					</p>
+					<div class="container-fluid">
+						<b>Exemplos:</b>
+						<p>
+							(Ambientes bsh/bash/ksh (Linux))
+							<br>
+							export OMP_STACKSIZE="10M"
+						</p>
+					</div>
+
+					<hr>
+
+					<center><h3>OMP_MAX_ACTIVE_LEVELS</h3></center>
+					<p>
+						Especifica o nível máximo do número de regiões paralelas aninhadas ativas. O número especificado tem de ser maior ou igual que 1 e menor ou igual que 5.
+					</p>
+
+					<div class="container-fluid">
+						<b>Exemplos:</b>
+						<p>
+							(Ambientes bsh/bash/ksh (Linux))
+							<br>
+							export OMP_MAX_ACTIVE_LEVELS=3
+						</p>
+					</div>
+
+					<hr>
+
+					<center><h3>OMP_THREAD_LIMIT</h3></center>
+					<p>
+						Define o número de threads que o podem ser usadas ativamente em todo o programa de OpenMP. A variável terá de ser um inteiro positivo.
+					</p>
+
+					<div class="container-fluid">
+						<b>Exemplos:</b>
+						<p>
+							(Ambientes bsh/bash/ksh (Linux))
+							<br>
+							export OMP_THREAD_LIMIT 6
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+</html>
